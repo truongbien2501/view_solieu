@@ -1,13 +1,13 @@
 [app]
 
 # (str) Title of your application
-title = hochua
+title = View
 
 # (str) Package name
-package.name = hochua
+package.name = View
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.hochua
+package.domain = org.View
 
 # (str) Source code where the main.py live
 source.dir = .
