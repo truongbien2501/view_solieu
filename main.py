@@ -64,22 +64,9 @@ class RectangularRippleImage(CircularRippleBehavior, ButtonBehavior, Image):
     pass
 
 
-class Hochua(MDApp):
-    # data = {
-    #         "Hạn ngắn": "facebook",
-    #         "Hạn vừa": "youtube",
-    #         "Hạn dài": "twitter",
-    #         "Lũ": "cloud-circle",
-    #         "Cảnh báo lũ": "camera",
-    #         }
-
+class SOLIEU_KTTV(MDApp):
     def build(self):
-        self.mucnuoc,self.qve = self.TTB_API_HC()
-        
-        # self.theme_cls.colors = colors
-        # self.theme_cls.primary_palette = "Teal"
-        # self.theme_cls.accent_palette = "Red"
-        self.title = "Hồ chứa KTTV"
+        self.title = "KTTV TTB"
         self.theme_cls.primary_palette = "Pink"
         Builder.load_file('main.kv')
         self.scr = Homescreen()
@@ -87,137 +74,93 @@ class Hochua(MDApp):
         # self.scr.ids.bottom_navigation.switch_tab('chart')
         return self.scr
 
-
-    def on_tab_switch(
-        self, instance_tabs, instance_tab, instance_tab_label, tab_text
-    ):
-
-        if tab_text=='TVHN':
-            self.root.ids.box_images.clear_widgets()
-            self.read_ftp_sever_image('tin_TVHN_0.png')
-            self.read_ftp_sever_image('tin_TVHN_1.png')
-            images =['cache/tin_TVHN_0.png','cache/tin_TVHN_1.png']
-            for image in images:
-                self.root.ids.box_images.add_widget(
-                    Image(
-                        source=image,
-                        size_hint=(1, None),
-                        height='430dp'
-                    )
-                )   
-            # self.read_ftp_sever_image('tin_TVHN_0.png')
-            # self.root.ids.image_bantin.source = 'cache/tin_TVHN_0.png'
-        elif tab_text=='TVHV':
-            self.root.ids.box_images.clear_widgets()
-            self.read_ftp_sever_image('tin_TVHV_0.png')
-            self.read_ftp_sever_image('tin_TVHV_1.png')
-            images =['cache/tin_TVHV_0.png','cache/tin_TVHV_1.png']
-            for image in images:
-                self.root.ids.box_images.add_widget(
-                    Image(
-                        source=image,
-                        size_hint=(1, None),
-                        height='430dp'
-                    )
-                )   
-            # self.read_ftp_sever_image('tin_TVHV_0.png')
-            # self.root.ids.image_bantin.source = 'cache/tin_TVHV_0.png'  
-        elif tab_text=='TVHD':
-            self.root.ids.box_images.clear_widgets()
-            self.read_ftp_sever_image('tin_TVHD_0.png')
-            self.read_ftp_sever_image('tin_TVHD_1.png')
-            self.read_ftp_sever_image('tin_TVHD_2.png')
-            images =['cache/tin_TVHD_0.png','cache/tin_TVHD_1.png','tin_TVHD_2.png']
-            for image in images:
-                self.root.ids.box_images.add_widget(
-                    Image(
-                        source=image,
-                        size_hint=(1, None),
-                        height='430dp'
-                    )
-                )   
-
-        elif tab_text=='LULU':
-            self.root.ids.box_images.clear_widgets()
-            self.read_ftp_sever_image('tin_LULU_0.png')
-            self.read_ftp_sever_image('tin_LULU_1.png')
-            images =['cache/tin_LULU_0.png','cache/tin_LULU_1.png']
-            for image in images:
-                self.root.ids.box_images.add_widget(
-                    Image(
-                        source=image,
-                        size_hint=(1, None),
-                        height='430dp'
-                    )
-                )   
-
-        elif tab_text=='CBLU':
-            self.root.ids.box_images.clear_widgets()
-            self.read_ftp_sever_image('tin_CBLU_0.png')
-            images =['cache/tin_CBLU_0.png']
-            for image in images:
-                self.root.ids.box_images.add_widget(
-                    Image(
-                        source=image,
-                        size_hint=(1, None),
-                        height='430dp'
-                    )
-                )   
     def on_start(self):
-        self.root.ids.tabs.add_widget(Tab(title="TVHN"))
-        self.root.ids.tabs.add_widget(Tab(title="TVHV"))
-        self.root.ids.tabs.add_widget(Tab(title="TVHD"))
-        self.root.ids.tabs.add_widget(Tab(title="LULU"))
-        self.root.ids.tabs.add_widget(Tab(title="CBLU"))
-        
-        
-        trammua = ['Sông Tranh','Trà Bui','Trà Giác','Trà Dơn','Trà Leng','Trà Mai','Trà Cang','Trà Vân','Trà Nam','Trà Linh']
-        # for ii in trammua:
-        #     print(len(ii))
-        trammua_eng = ['tramdapst2','TRABUI','tragiac','tradon','traleng','TRAMAI','tracang','travan','tranam2','tralinh']
-        
-        for i in range(len(trammua)):
-            
-            muatong = self.TTB_API_SONGTRANH_muatong(trammua_eng[i])
-            # muacactram.append(muatong)
-            
-            # mua = self.TTB_API_SONGTRANH(trammua_eng[i])
-            # print(mua)
-            if len(muatong) >2:
-                # print(muatong[0])
-                rain = str(muatong[0])
-                tgsl = str(muatong[-1][-8:-3])
-            else:
-                rain = '-'
-                tgsl ='---:---'
-            # khoangtrang
-            text_length = 30
-            trammua_str = trammua[i].ljust(text_length)
-            rain_str = rain.rjust(text_length - len(trammua[i]) - 1)
-
-            self.root.ids.container.add_widget(
-                OneLineIconListItem(
-                    IconLeftWidget(icon="weather-partly-rainy"),
-                    text=trammua_str + ':(' + tgsl + ')' +  rain_str + ' mm'
-                )
+        tinh = ['Quang Ngai','Quang Nam','Da Nang', 'Thua Thien Hue','Quang Tri','Quang Binh']
+        # tạo các icon
+        for tram in tinh:
+            icon_item = OneLineIconListItem(
+                IconLeftWidget(icon="weather-partly-rainy"),
+                text=tram,
+                on_release=self.icon_pressed
             )
-        # print(muacactram[0])
-            
-        #  # list of images
-        # images = ['cache/tin_TVHN_0.png', 'cache/tin_TVHN_0.png'] 
-        
-        # for image in images:
-        # self.root.ids.box_images.add_widget(
-        #     Image(
-        #         source='',
-        #         size_hint=(1, None),
-        #         height="250dp"
-        #     )
-        # )
+            # gán su kien cho icon
+            self.root.ids.provin.add_widget(icon_item)
 
+    
+    def icon_pressed(self,instance): # su kien click vao cac o tỉnh
+        clicked_text = instance.text
+        # print(clicked_text)
+        app = MDApp.get_running_app()
+        app.root.current = 'solieu'
+        self.root.ids.tramkttv_tinh.clear_widgets()
+        self.root.ids.tieude_solieu.title = clicked_text
+        self.root.ids.hintexx.hint_text = "Tìm kiếm:" + clicked_text
+        ds_tram = np.genfromtxt('TTB.txt', delimiter=',', dtype=None, names=True, encoding=None)
+        for tram in ds_tram:
+            if str(tram[4]) == str(clicked_text):
+                print(tram[4])
+                icon_item = OneLineIconListItem(
+                    IconLeftWidget(icon="weather-partly-rainy"),
+                    text=tram[1] + ' - ' + tram[3],
+                    on_release=self.tram_pressed
+                )
+                # gán su kien cho icon
+                self.root.ids.tramkttv_tinh.add_widget(icon_item)
+                
+    def search_tram(self, search_text):# su kien tìm kiếm
+        self.root.ids.tramkttv_tinh.clear_widgets()
+        # self.root.ids.hintexx.helper_text = self.root.ids.tieude_solieu.title
+        ds_tram = np.genfromtxt('TTB.txt', delimiter=',', dtype=None, names=True, encoding=None)
+        for tram in ds_tram:
+            if str(tram[1]) == str(search_text):
+                icon_item = OneLineIconListItem(
+                    IconLeftWidget(icon="weather-partly-rainy"),
+                    text=tram[1] + ' - ' + tram[3],
+                    on_release=self.tram_pressed
+                )
+                # gán su kien cho icon
+                self.root.ids.tramkttv_tinh.add_widget(icon_item)
+    
+    def tram_pressed(self,instance): # su kien click vao tram
+        clicked_text = instance.text
+        app = MDApp.get_running_app()
+        app.root.current = 'tram'
+        self.root.ids.solieutram.clear_widgets()
+        self.root.ids.tieude_tram.title = clicked_text
+        tt_tram = clicked_text.split('-')
+        tentram = str(tt_tram[0]).strip()
+        yeuto = str(tt_tram[1]).strip()
+        ds_tram = np.genfromtxt('TTB.txt', delimiter=',', dtype=None, names=True, encoding=None)
+        for tram in ds_tram:
+            # print(str(tram[1]))
+            # print(str(tram[3]))
+            # print(str(tentram))
+            # print(str(yeuto))
+            if str(tram[1]) == str(tentram) and str(tram[3]) == str(yeuto):
+                solieu = self.TTB_API(tram[0],tram[2])
+                # print(solieu)
+                for value in range(len(solieu) - 1, -1, -1):
+                    icon_item = OneLineIconListItem(
+                        text=solieu[value]['Thoigian_SL'] + ' : ' + solieu[value]['Solieu']
+                    )
+                    # gán su kien cho icon
+                    self.root.ids.solieutram.add_widget(icon_item)
+                break
+    
+    
+    
     def callback_trangchu(self):
         app = MDApp.get_running_app()
         app.root.current = 'trangchu'
+        
+    def callback_solieu(self):
+        app = MDApp.get_running_app()
+        app.root.current = 'solieu'
+    # def callback_solieu(self):
+    #     app = MDApp.get_running_app()
+    #     app.root.current = 'solieu'
+        
+        
         
     def callback_for_menu_items(self, *args):
         toast(args[0])
@@ -261,9 +204,6 @@ class Hochua(MDApp):
     def show_marker_info(self,tram,thongtin):
         toast(tram + ':' + thongtin)
 
-            
-    def update_image_source(self, new_image_path):
-        pass
         
     def TTB_API_HC(self):
         now = datetime.now()
@@ -293,20 +233,19 @@ class Hochua(MDApp):
         return tonngmua
     
     
-    def TTB_API_SONGTRANH(self,matram):
+    def TTB_API(self,matram,ten_bang):
         now = datetime.now()
         kt = datetime(now.year,now.month,now.day,now.hour)
         bd = kt - timedelta(days=1)
         # mua
         pth = 'http://113.160.225.84:2018/API_TTB/JSON/solieu.php?matram={}&ten_table={}&sophut=60&tinhtong=0&thoigianbd=%27{}%2000:00:00%27&thoigiankt=%27{}%2023:59:00%27'
-        pth = pth.format(matram,'mua_songtranh',bd.strftime('%Y-%m-%d'),kt.strftime('%Y-%m-%d'))
+        pth = pth.format(matram,ten_bang,bd.strftime('%Y-%m-%d'),kt.strftime('%Y-%m-%d'))
         print(pth)
         response = requests.get(pth)
         mua = np.array(response.json())
-        # print(mua)
-        if len(mua) < 5:
-            return '-','-'
-        
+        print(mua)
+        # if len(mua) < 5:
+        #     return '-','-'
         return mua
     
     def TTB_API_SONGTRANH_muatong(self,matram):
@@ -359,9 +298,6 @@ class Hochua(MDApp):
         # Trả về giá trị bạn muốn
         return mucnuoc[-1]['Solieu'],qve[-1]['Solieu']
 
-    def load_new_image(self):
-            # Load a new image when scrolling to the top
-            # Replace this logic with loading the next image from your source
-            self.root.ids.image.source = 'path_to_new_image.png'
+
 if __name__ == '__main__':
-    Hochua().run()
+    SOLIEU_KTTV().run()

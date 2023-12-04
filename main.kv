@@ -99,543 +99,70 @@
                         #     app.root.transition.direction ="left"
                         #     app.root.login(username.text, password.text)
 
-            # MDRaisedButton:
-            #     text: 'Đăng nhập'
-            #     pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-            #     on_press: root.login(username.text, password.text)
     MDScreen:
         name:'trangchu'
-        MDBottomNavigation:
-            # selected_color_background: 0, 0, 1, .4
-            MDBottomNavigationItem:
-                # on_use_text: 'Trang chủ'
-                text:'Trang chủ'
-                active_font_size: "5dp"
-                name: 'home'
-                icon:'home'
-                pos_hint: {"center_x": .5, "center_y": .5} # hien thi giua
-                # on_tab_release: root.current = 'trangchu'
-                MDLabel:
-                    BoxLayout:
-                        orientation: 'vertical'
-                        spacing: 5
-                        padding: [10,10,10, 10] # trai,trên,phai,duoi
-                        MDCard:
-                            # orientation: 'vertical'
-                            size_hint: None,None # kich thuoc bang 50% va 20 % hop dung
-                            # pos_hint: {"top": .5}
-                            size: (root.width * 0.96, root.height * 0.80)
-
-                            # padding:20
-                            # radius: [15]
-                            GridLayout:
-                                cols: 5
-                                spacing: 10
-                                padding: 10
-                                canvas.before:
-                                    Color:
-                                        rgba: 0, 0.6, 1, 1
-                                    Line:
-                                        width: 1
-                                        rectangle: self.x, self.y, self.width, self.height
-
-                                MDLabel: # ten
-                                    text: "Hồ"
-                                    md_bg_color: 'teal'
-                                    halign: "center"
-                                MDLabel:
-                                    text: "Mực nước\n(m)"
-                                    md_bg_color: 'teal'
-                                    halign: "center"
-                                MDLabel:
-                                    text: "Q về\n(m3\s)"
-                                    md_bg_color: 'teal'
-                                    halign: "center"
-                                MDLabel:
-                                    text: "Dung tích\n(m3)"
-                                    md_bg_color: 'teal'
-                                    halign: "center"
-                                MDLabel:
-                                    text: "Dung tích 24h tới\n(m3)"
-                                    md_bg_color: 'teal'
-                                    halign: "center"
-                                MDLabel:
-                                    text: "Sông Tranh"
-                                    halign: "center"
-                                MDLabel:
-                                    # text:  str(app.get_custom_value()[0])
-                                    text:  str(app.mucnuoc[-1]['Solieu'])
-                                    halign: "center"
-                                MDLabel:
-                                    # text: str(app.get_custom_value()[1])
-                                    text:  str(app.qve[-1]['Solieu'])
-                                    halign: "center"
-                                MDLabel:
-                                    text: "18.57"
-                                    halign: "center"
-                                MDLabel:
-                                    text: "18.52"
-                                    halign: "center"
-
-                                MDLabel:
-                                    text: "Sông Bung"
-                                    halign: "center"
-                                MDLabel:
-                                    text: "-"
-                                    halign: "center"
-                                MDLabel:
-                                    text: "-"
-                                    halign: "center"
-                                MDLabel:
-                                    text: "-"
-                                    halign: "center"
-                                MDLabel:
-                                    text: "-"
-                                    halign: "center"
-
-                                MDLabel:
-                                    text: "A Vương"
-                                    halign: "center"
-                                MDLabel:
-                                    text: "-"
-                                    halign: "center"
-                                MDLabel:
-                                    text: "-"
-                                    halign: "center"
-                                MDLabel:
-                                    text: "-"
-                                    halign: "center"
-                                MDLabel:
-                                    text: "-"
-                                    halign: "center"
-
-            # bieu do thuc do va du bao
-            MDBottomNavigationItem: 
-                text: 'Biểu đồ'
-                name: 'chart' # dat ten
-                icon:'chart-bell-curve-cumulative' # bieu tuong
-                # on_release: app.root.update_chart()
-                # MDBoxLayout:
-                #     orientation: 'vertical'
-                GridLayout:
-                    cols:1
-                    rows:2
-                    MDTopAppBar:
-                        title: 'Đường quá trình'
-                        pos_hint: {"top": 1}
-                        elevation: 1
-                        right_action_items: [["image-size-select-actual", lambda x: app.show_example_grid_bottom_sheet()]                        ]
-                    Image:
-                        id: image_chart_td
-                        source: 'cache/chart_H.png'
-                        pos_hint: {"center_x": .5, "center_y": .5}
-                        size_hint: 0.9,0.9
-                        # height: 200  # Điều chỉnh chiều cao của hình ảnh theo ý muốn 
-
-                # MDFillRoundFlatButton:
-                #     text: "Chọn biểu đồ"
-                #     on_release: app.show_example_grid_bottom_sheet()
-                #     pos_hint: {"top": 1}
-                #     # pos_hint: {"center_x": .5, "center_y": .5}
-                #     size_hint: 0.1,0.1
-
-                #     TabbedPanel:
-                #         do_default_tab: False
-                #         TabbedPanelItem:
-                #             text: 'TVHN'
-                #             background_color: 0, 0, 1, 1
-                #             on_release: app.get_ftp_image('tvhn.png')
-                #         TabbedPanelItem:
-                #             text: 'TVHV'
-                #             background_color: 0, 0, 1, 1
-                #             on_release: app.get_ftp_image('tvhv.png')
-                #         TabbedPanelItem:
-                #             text: 'LULU'
-                #             background_color: 0, 0, 1, 1
-                #             on_release: app.get_ftp_image('lulu.png')
-
-                # Image:
-                #     id: image_chart_tvhn
-                #     source: 'cache/tvhn.png'
-                #     pos_hint: {"center_x": .5, "center_y": .5}
-                #     size_hint: 0.9,0.9
-                #     # height: 200  # Điều chỉnh chiều cao của hình ảnh theo ý muốn    
-
-            # hinh anh ban tin kttv
-            MDBottomNavigationItem:
-                text: 'Bản tin'
-                name: 'bantin'
-                icon:'newspaper-variant-multiple-outline'
-                MDTabs:
-                    id: tabs
-                    on_tab_switch: app.on_tab_switch(*args)
-
-                # Image:
-                #     id: image_bantin
-                #     source: 'cache/tin_TVHN_0.png'
-                #     pos_hint: {"center_x": .5, "center_y": .5}
-                #     size_hint: 0.99,0.8
-                MDBoxLayout:
-                    padding:10
-                    orientation: 'vertical'
-                    size_hint: (1, 0.9)
-                    MDScrollView:
-                        do_scroll_x: False  
-                        MDBoxLayout:
-                            id: box_images
-                            orientation: 'vertical'
-                            size_hint_y: None
-                            height: self.minimum_height
-                    
-
-            # du lieu do mua
-            MDBottomNavigationItem:
-                text: 'Mưa'
-                name: 'luongmua'
-                icon:'weather-lightning-rainy'
-                on_tab_release:
-                    app.root.current = 'bangmua'
-                MDTopAppBar:
-                    md_bg_color: app.theme_cls.primary_color
-                    elevation:1
-                    pos_hint: {"top": 1}
-                    title:'Tổng kết mưa (mm)'
-                    # right_action_items: [["dots-vertical", lambda x: app.callback_trangchu()], ["clock", lambda x: app.callback_trangchu()]]
-                    # left_action_items: [['arrow-left', lambda x: app.callback_trangchu()]]
-                MDBoxLayout:
-                    size_hint: 0.99, 0.86
-                    padding:5
-                    orientation: 'vertical'
-                    MDGridLayout:
-                        cols:6
-                        rows:11
-                        MDLabel:
-                            text:'Thời gian\nHồ'
-                            halign: "center"
-                        MDLabel:
-                            text:'1h'
-                            halign: "center"
-                        MDLabel:
-                            text:'2h'
-                            halign: "center"
-                        MDLabel:
-                            text:'6h'
-                            halign: "center"
-                        MDLabel:
-                            text:'12h'
-                            halign: "center"          
-                        MDLabel:
-                            text:'24h'
-                            halign: "center"    
-
-                        MDLabel:
-                            text:'Sông Tranh'
-                            halign: "center"
-                        MDLabel:
-                            text: str(app.TTB_API_SONGTRANH_muatong('tramdapst2')[0])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tramdapst2')[1])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tramdapst2')[2])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tramdapst2')[3])
-                            halign: "center"          
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tramdapst2')[4])
-                            halign: "center"    
-                        MDLabel:
-                            text:'Trà Bui'
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('TRABUI')[0])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('TRABUI')[1])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('TRABUI')[2])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('TRABUI')[3])
-                            halign: "center"          
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('TRABUI')[4])
-                            halign: "center"    
-                        MDLabel:
-                            text:'Trà Giác'
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tragiac')[0])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tragiac')[1])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tragiac')[2])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tragiac')[3])
-                            halign: "center"          
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tragiac')[4])
-                            halign: "center"    
-                        MDLabel:
-                            text:'Trà Dơn'
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tradon')[0])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tradon')[1])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tradon')[2])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tradon')[3])
-                            halign: "center"          
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tradon')[4])
-                            halign: "center"                           
-                        MDLabel:
-                            text:'Trà Leng'
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('traleng')[0])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('traleng')[1])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('traleng')[2])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('traleng')[3])
-                            halign: "center"          
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('traleng')[4])
-                            halign: "center"    
-                        MDLabel:
-                            text:'Trà Mai'
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('TRAMAI')[0])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('TRAMAI')[1])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('TRAMAI')[2])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('TRAMAI')[3])
-                            halign: "center"          
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('TRAMAI')[4])
-                            halign: "center"    
-                        MDLabel:
-                            text:'Trà Căng'
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tracang')[0])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tracang')[1])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tracang')[2])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tracang')[3])
-                            halign: "center"          
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tracang')[4])
-                            halign: "center"    
-                        MDLabel:
-                            text:'Trà Vân'
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('travan')[0])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('travan')[1])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('travan')[2])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('travan')[3])
-                            halign: "center"          
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('travan')[4])
-                            halign: "center"    
-                        MDLabel:
-                            text:'Trà Nam'
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tranam2')[0])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tranam2')[1])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tranam2')[2])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tranam2')[3])
-                            halign: "center"          
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tranam2')[4])
-                            halign: "center"    
-                        MDLabel:
-                            text:'Trà Linh'
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tralinh')[0])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tralinh')[1])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tralinh')[2])
-                            halign: "center"
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tralinh')[3])
-                            halign: "center"          
-                        MDLabel:
-                            text:str(app.TTB_API_SONGTRANH_muatong('tralinh')[4])
-                            halign: "center"    
-            # ban do du lieu tram
-            MDBottomNavigationItem:
-                text:'Bản đồ'
-                name: 'map'
-                theme_icon_color: "Custom"
-                icon_color: "white"
-                icon:'map-marker-radius-outline'
-                MDBoxLayout:
-                    orientation: 'vertical'
-                    spacing: 5
-                    padding: 10
-                    MDTopAppBar:
-                        md_bg_color: app.theme_cls.primary_color
-                        elevation:1
-                        title:'BẢN ĐỒ TRẠM ĐO MƯA'
-                        # right_action_items: [["dots-vertical", lambda x: app.callback_trangchu()], ["clock", lambda x: app.callback_trangchu()]]
-                        # left_action_items: [['arrow-left', lambda x: app.callback_trangchu()]]
-                    MapView:
-                        zoom: 8
-                        lat: 15.3219  # Vĩ độ
-                        lon: 108.0987  # Kinh độ
-                        MapMarker:
-                            title: 'Sông Tranh'
-                            lat: 15.331688  # Vĩ độ của marker
-                            lon: 108.147511  # Kinh độ của marker
-                            source: "cache/weather.png"
-                            description: "Thông tin điểm đánh dấu"
-                            size: (35, 35)
-                            # on_press: app.show_marker_info(self.title,self.description)
-                        MapMarker:
-                            title: 'Trà Bui'
-                            lat: 15.34661   # Vĩ độ của marker
-                            lon: 108.041526  # Kinh độ của marker
-                            source: "cache/weather.png"
-                            size: (35, 35)    
-                        MapMarker:
-                            title: 'Trà Giác'
-                            lat: 15.240458  # Vĩ độ của marker
-                            lon: 108.178398  # Kinh độ của marker
-                            source: "cache/weather.png"
-                            size: (35, 35)    
-                        MapMarker:
-                            title: 'Trà Dơn'
-                            lat: 15.243961  # Vĩ độ của marker
-                            lon: 108.0858880  # Kinh độ của marker
-                            source: "icon/weather.png"
-                            size: (35, 35)    
-                        MapMarker:
-                            title: 'Trà Len'
-                            lat: 15.272192 # Vĩ độ của marker
-                            lon: 108.014046 # Kinh độ của marker
-                            source: "icon/weather.png"
-                            size: (35, 35)    
-                        MapMarker:
-                            title: 'Trà Mai'
-                            lat: 15.1547 # Vĩ độ của marker
-                            lon: 108.1085 # Kinh độ của marker
-                            source: "icon/weather.png"
-                            size: (35, 35)    
-                        MapMarker:
-                            title: 'Trà Cang'
-                            lat: 15.1046490 # Vĩ độ của marker
-                            lon: 108.0714240 # Kinh độ của marker
-                            source: "icon/weather.png"
-                            size: (35, 35)                                                        
-                        MapMarker:
-                            title: 'Trà Vân'
-                            lat: 15.1130910 # Vĩ độ của marker
-                            lon: 108.1800410 # Kinh độ của marker
-                            source: "icon/weather.png"
-                            size: (35, 35)                            
-                        MapMarker:
-                            title: 'Trà Nam'
-                            lat: 14.9871600 # Vĩ độ của marker
-                            lon: 108.1336140 # Kinh độ của marker
-                            source: "icon/weather.png"
-                            size: (35, 35)    
-                        MapMarker:
-                            title: 'Trà Linh'
-                            lat: 15.030926 # Vĩ độ của marker
-                            lon: 108.0241060 # Kinh độ của marker
-                            source: "icon/weather.png"
-                            size: (35, 35)        
-
-                        MapMarker:
-                            title: 'Nông Sơn'
-                            lat: 15.70276202116165 # Vĩ độ của marker
-                            lon: 108.03392429139377 # Kinh độ của marker
-                            source: "icon/thuychi.png"
-                            size: (35, 35)    
-                        MapMarker:
-                            title: 'Câu Lâu'
-                            lat: 15.857806467135058 # Vĩ độ của marker
-                            lon: 108.27289741859273 # Kinh độ của marker
-                            source: "icon/thuychi.png"
-                            size: (35, 35)    
-                        
-                        MapMarker:
-                            title: 'Quần đảo Trường Sa(Việt Nam)'
-                            lat: 9.45 # Vĩ độ của marker
-                            lon: 112.904 # Kinh độ của marker
-                            size: (20, 20)
-                            source: 'icon/quocky.png' 
-                        MapMarker:
-                            title: 'Quần đảo Hoàng Sa(Việt Nam)'
-                            lat: 16.6 # Vĩ độ của marker
-                            lon: 112.7 # Kinh độ của marker
-                            size: (35, 35)    
-                            source: 'icon/quocky.png'  # Đường dẫn đến hình ảnh marker (điền tên tệp ảnh của bạn)
-    MDScreen:
-        name:'bangmua'
         MDBoxLayout:
             orientation: 'vertical'
             md_bg_color: 1, 1, 1, 1
             MDTopAppBar:
+                id:tieudettb
                 md_bg_color: app.theme_cls.primary_color
                 elevation:1
-                title:'LƯỢNG MƯA (mm)'
-                right_action_items: [["dots-vertical", lambda x: app.callback_trangchu()], ["clock", lambda x: app.callback_trangchu()]]
-                left_action_items: [['arrow-left', lambda x: app.callback_trangchu()]]
+                title:'ĐÀI KTTV TTB'
+                # right_action_items: [["dots-vertical", lambda x: app.callback_trangchu()], ["clock", lambda x: app.callback_trangchu()]]
+                left_action_items: [['home', lambda x: app.callback_trangchu()]]
             MDBoxLayout:
                 padding:10
                 orientation: 'vertical'
                 
                 MDScrollView:
                     MDList:
-                        id: container
+                        id: provin
                         # md_bg_color:0, 0, 0, 0.8
+    MDScreen:
+        name:'solieu'
+        MDBoxLayout:
+            orientation: 'vertical'
+            md_bg_color: 1, 1, 1, 1
+            MDTopAppBar:
+                id:tieude_solieu
+                md_bg_color: app.theme_cls.primary_color
+                elevation:2
+                title:''
+                left_action_items: [['arrow-left-thick', lambda x: app.callback_trangchu()]]
+
+            MDBoxLayout:
+                padding:10
+                orientation: 'vertical'
+                MDScrollView:
+                    MDList:
+                        id: tramkttv_tinh
+                        # md_bg_color:0, 0, 0, 0.8    
+            MDTextField:
+                icon_right: "magnify"
+                id: hintexx
+                hint_text: "Tìm kiếm"
+                on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
+                mode: "round"
+                # pos_hint:{'top':.5}
+    MDScreen:
+        name:'tram'
+        MDBoxLayout:
+            orientation: 'vertical'
+            md_bg_color: 1, 1, 1, 1
+            MDTopAppBar:
+                id:tieude_tram
+                md_bg_color: app.theme_cls.primary_color
+                elevation:2
+                title:''
+                left_action_items: [['arrow-left-thick', lambda x: app.callback_solieu()]]
+
+            MDBoxLayout:
+                padding:10
+                orientation: 'vertical'
+                MDScrollView:
+                    MDList:
+                        id: solieutram
 
 <RectangularRippleButton>:
 <RectangularRippleImage>:
