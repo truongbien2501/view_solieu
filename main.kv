@@ -1,4 +1,3 @@
-#:import MapView kivy_garden.mapview.MapView
 <Homescreen>:
     MDScreen:
         md_bg_color:239/255,243/255,246/255,1
@@ -99,6 +98,7 @@
                         #     app.root.transition.direction ="left"
                         #     app.root.login(username.text, password.text)
 
+    
     MDScreen:
         name:'trangchu'
         MDBoxLayout:
@@ -119,6 +119,12 @@
                     MDList:
                         id: provin
                         # md_bg_color:0, 0, 0, 0.8
+            MDBottomAppBar:
+                md_bg_color: app.theme_cls.primary_color
+                MDTopAppBar:
+                    md_bg_color: app.theme_cls.primary_color
+                    elevation:1
+                    title:'ĐÀI KTTV TTB'
     MDScreen:
         name:'solieu'
         MDBoxLayout:
@@ -130,20 +136,28 @@
                 elevation:2
                 title:''
                 left_action_items: [['arrow-left-thick', lambda x: app.callback_trangchu()]]
-
+                MDTextField:
+                    icon_right: "magnify"
+                    id: hintexx
+                    hint_text: "Tìm kiếm"
+                    on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
+                    mode: "round"
+                    # pos_hint: {"center_x": .5, "center_y": .5}
             MDBoxLayout:
+                size_hint: None,None
+                size: (root.width * 0.96, root.height * 0.90)
                 padding:10
                 orientation: 'vertical'
                 MDScrollView:
                     MDList:
                         id: tramkttv_tinh
-                        # md_bg_color:0, 0, 0, 0.8    
-            MDTextField:
-                icon_right: "magnify"
-                id: hintexx
-                hint_text: "Tìm kiếm"
-                on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
-                mode: "round"
+                            # md_bg_color:0, 0, 0, 0.8    
+            # MDTextField:
+            #     icon_right: "magnify"
+            #     id: hintexx
+            #     hint_text: "Tìm kiếm"
+            #     on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
+            #     mode: "round"
                 # pos_hint:{'top':.5}
     MDScreen:
         name:'tram'

@@ -67,7 +67,7 @@ class RectangularRippleImage(CircularRippleBehavior, ButtonBehavior, Image):
 class SOLIEU_KTTV(MDApp):
     def build(self):
         self.title = "KTTV TTB"
-        self.theme_cls.primary_palette = "Pink"
+        self.theme_cls.primary_palette = "LightBlue"
         Builder.load_file('main.kv')
         self.scr = Homescreen()
         self.scr.current = 'trangchu'
@@ -79,7 +79,7 @@ class SOLIEU_KTTV(MDApp):
         # tạo các icon
         for tram in tinh:
             icon_item = OneLineIconListItem(
-                IconLeftWidget(icon="weather-partly-rainy"),
+                IconLeftWidget(icon="city"),
                 text=tram,
                 on_release=self.icon_pressed
             )
@@ -102,20 +102,38 @@ class SOLIEU_KTTV(MDApp):
         return tentinh
 
     def icon_pressed(self,instance): # su kien click vao cac o tỉnh
-        clicked_text = instance.text
+        tinh_click = instance.text
         # print(clicked_text)
         app = MDApp.get_running_app()
         app.root.current = 'solieu'
         self.root.ids.tramkttv_tinh.clear_widgets()
-        self.root.ids.tieude_solieu.title = clicked_text
-        self.root.ids.hintexx.hint_text = "Tìm kiếm:" + clicked_text
-        tentinh = self.ten_tinh_txt(clicked_text)
+        self.root.ids.tieude_solieu.title = tinh_click
+        self.root.ids.hintexx.hint_text = "Tìm kiếm:" + tinh_click
+        tentinh = self.ten_tinh_txt(tinh_click)
         ds_tram = np.genfromtxt('tinh/' + tentinh, delimiter=',', dtype=None, names=True, encoding=None)
         for tram in ds_tram:
-            if str(tram[4]) == str(clicked_text):
+            if str(tram[4]) == str(tinh_click):
+                if 'mua' in str(tram[2]):
+                    bieutuong = "weather-partly-rainy"
+                elif 'mucnuoc' in str(tram[2]):
+                    bieutuong = 'waves-arrow-up'
+                elif ('Gio' in str(tram[2])) or ('gio' in str(tram[2]) or ('Gio' in str(tram[3]))):
+                    bieutuong = 'wind-power'
+                elif 'nhietdo' in str(tram[2]):
+                    bieutuong = 'temperature-celsius'
+                elif 'khiap' in str(tram[2]):
+                    bieutuong = 'car-brake-low-pressure'
+                elif 'doam' in str(tram[2]):
+                    bieutuong = 'cloud-percent' 
+                elif 'nguon' in str(tram[2]):
+                    bieutuong = 'car-battery'  
+                elif ('luuluong' in str(tram[2])) or ('Luu Luong' in str(tram[3])):
+                    bieutuong = 'waves-arrow-right '     
+                else:
+                    bieutuong = ''
                 # print(tram[4])
                 icon_item = OneLineIconListItem(
-                    IconLeftWidget(icon="weather-partly-rainy"),
+                    IconLeftWidget(icon=bieutuong),
                     text=tram[1] + ' - ' + tram[3],
                     on_release=self.tram_pressed
                 )
@@ -125,8 +143,8 @@ class SOLIEU_KTTV(MDApp):
     def search_tram(self, search_text):# su kien tìm kiếm
         self.root.ids.tramkttv_tinh.clear_widgets()
         # self.root.ids.hintexx.helper_text = self.root.ids.tieude_solieu.title
-        tentinh = self.ten_tinh_txt(search_text)
-        ds_tram = np.genfromtxt('tinh/' + tentinh, delimiter=',', dtype=None, names=True, encoding=None)
+        # tentinh = self.ten_tinh_txt(search_text)
+        ds_tram = np.genfromtxt('tinh/TTB.txt', delimiter=',', dtype=None, names=True, encoding=None)
         for tram in ds_tram:
             if str(tram[1]) == str(search_text):
                 icon_item = OneLineIconListItem(
@@ -173,44 +191,44 @@ class SOLIEU_KTTV(MDApp):
     def callback_for_menu_items(self, *args):
         toast(args[0])
 
-    def show_example_grid_bottom_sheet(self):
-        # pass
-        bottom_sheet_menu = MDGridBottomSheet()
-        data = {
-            "Mực nước": "waves-arrow-up",
-            "Q đến": "alpha-q-circle",
-            "Q xả": "alpha-d-circle-outline",
-            "Mưa": "weather-pouring",
-            "Mưa tại đập": "alpha-c-circle-outline",
-        }
-        for item in data.items():
-            bottom_sheet_menu.add_item(
-                item[0],
-                lambda x, y=item[0]: self.callback_for_menu_items(y),
-                icon_src=item[1],
-            )
-        bottom_sheet_menu.open()
+    # def show_example_grid_bottom_sheet(self):
+    #     # pass
+    #     bottom_sheet_menu = MDGridBottomSheet()
+    #     data = {
+    #         "Mực nước": "waves-arrow-up",
+    #         "Q đến": "alpha-q-circle",
+    #         "Q xả": "alpha-d-circle-outline",
+    #         "Mưa": "weather-pouring",
+    #         "Mưa tại đập": "alpha-c-circle-outline",
+    #     }
+    #     for item in data.items():
+    #         bottom_sheet_menu.add_item(
+    #             item[0],
+    #             lambda x, y=item[0]: self.callback_for_menu_items(y),
+    #             icon_src=item[1],
+    #         )
+    #     bottom_sheet_menu.open()
     
-    def callback_for_menu_items(self, selected_item):
-        # Thực hiện cập nhật hình ảnh dựa trên mục được chọn
-        if selected_item == "Mực nước":
-            self.read_ftp_sever_image('chart_H.png')
-            self.root.ids.image_chart_td.source = 'cache/chart_H.png'
-        elif selected_item == "Q đến":
-            self.read_ftp_sever_image('chart_Q.png')
-            self.root.ids.image_chart_td.source = 'cache/chart_Q.png'
-        elif selected_item == "Q xả":
-            self.read_ftp_sever_image('chart_Q_xa.png')
-            self.root.ids.image_chart_td.source = 'cache/chart_Q_xa.png'
-        elif selected_item == "Mưa":
-            self.read_ftp_sever_image('chart_mua_tranam2.png')
-            self.root.ids.image_chart_td.source = 'cache/chart_mua_tranam2.png'
-        elif selected_item == "Mưa tại đập":
-            self.read_ftp_sever_image('chart_mua_tramdapst2.png')
-            self.root.ids.image_chart_td.source = 'cache/chart_mua_tramdapst2.png'
+    # def callback_for_menu_items(self, selected_item):
+    #     # Thực hiện cập nhật hình ảnh dựa trên mục được chọn
+    #     if selected_item == "Mực nước":
+    #         self.read_ftp_sever_image('chart_H.png')
+    #         self.root.ids.image_chart_td.source = 'cache/chart_H.png'
+    #     elif selected_item == "Q đến":
+    #         self.read_ftp_sever_image('chart_Q.png')
+    #         self.root.ids.image_chart_td.source = 'cache/chart_Q.png'
+    #     elif selected_item == "Q xả":
+    #         self.read_ftp_sever_image('chart_Q_xa.png')
+    #         self.root.ids.image_chart_td.source = 'cache/chart_Q_xa.png'
+    #     elif selected_item == "Mưa":
+    #         self.read_ftp_sever_image('chart_mua_tranam2.png')
+    #         self.root.ids.image_chart_td.source = 'cache/chart_mua_tranam2.png'
+    #     elif selected_item == "Mưa tại đập":
+    #         self.read_ftp_sever_image('chart_mua_tramdapst2.png')
+    #         self.root.ids.image_chart_td.source = 'cache/chart_mua_tramdapst2.png'
     
-    def show_marker_info(self,tram,thongtin):
-        toast(tram + ':' + thongtin)
+    # def show_marker_info(self,tram,thongtin):
+    #     toast(tram + ':' + thongtin)
 
         
     def TTB_API_HC(self):
