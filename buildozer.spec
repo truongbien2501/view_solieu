@@ -37,7 +37,7 @@ version = 0.404
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3==3.9.10,hostpython3==3.9.10,kivy,kivymd,pillow,kivy_garden.mapview,openssl,requests,charset_normalizer,chardet,idna, urllib3,certifi,pyftpdlib,Python-IO,android,DateTime,numpy
+requirements = python3==3.9.10,hostpython3==3.9.10,kivy,kivymd,pillow,kivy_garden.graph,kivy_garden.mapview,openssl,requests,charset_normalizer,chardet,idna, urllib3,certifi,pyftpdlib,Python-IO,android,DateTime,numpy
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -47,7 +47,7 @@ requirements = python3==3.9.10,hostpython3==3.9.10,kivy,kivymd,pillow,kivy_garde
 #presplash.filename = %(source.dir)s/data/presplash.png
 
 # (str) Icon of the application
-icon.filename = %(source.dir)s/icon/ilogo_ttb.png
+icon.filename = icon/ilogo_ttb.png
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = portrait
