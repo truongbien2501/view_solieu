@@ -36,8 +36,16 @@ from kivymd.uix.list import OneLineListItem,OneLineIconListItem,IconLeftWidget
 from kivy.metrics import dp
 from kivymd.icon_definitions import md_icons
 from kivymd.uix.gridlayout import MDGridLayout
-
+from math import sin
+from kivy_garden.graph import Graph, MeshLinePlot
+# from kivy.uix.widget import Widget
+# from kivy.properties import ObjectProperty
+# import matplotlib.pyplot as plt
+# from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
 # Window.size = (350, 600)
+
+# class GraphWidget(Widget):
+#     graph = ObjectProperty(None)
 
 class Tab(MDFloatLayout, MDTabsBase):
     '''Class implementing content for a tab.'''
@@ -106,7 +114,13 @@ class SOLIEU_KTTV(MDApp):
         # print(clicked_text)
         app = MDApp.get_running_app()
         app.root.current = 'solieu'
-        self.root.ids.tramkttv_tinh.clear_widgets()
+        self.root.ids.tramkttv_mua_tinh.clear_widgets()
+        self.root.ids.tramkttv_gio_tinh.clear_widgets()
+        self.root.ids.tramkttv_mucnuoc_tinh.clear_widgets()
+        self.root.ids.tramkttv_nhiet_tinh.clear_widgets()
+        self.root.ids.tramkttv_ap_tinh.clear_widgets()
+        
+        
         self.root.ids.tieude_solieu.title = tinh_click
         self.root.ids.hintexx.hint_text = "Tìm kiếm:" + tinh_click
         tentinh = self.ten_tinh_txt(tinh_click)
@@ -114,7 +128,7 @@ class SOLIEU_KTTV(MDApp):
         for tram in ds_tram:
             if str(tram[4]) == str(tinh_click):
                 if 'mua' in str(tram[2]):
-                    bieutuong = "weather-partly-rainy"
+                    bieutuong = "weather-partly-rainy"                    
                 elif 'mucnuoc' in str(tram[2]):
                     bieutuong = 'waves-arrow-up'
                 elif ('Gio' in str(tram[2])) or ('gio' in str(tram[2]) or ('Gio' in str(tram[3]))):
@@ -126,7 +140,7 @@ class SOLIEU_KTTV(MDApp):
                 elif 'doam' in str(tram[2]):
                     bieutuong = 'cloud-percent' 
                 elif 'nguon' in str(tram[2]):
-                    bieutuong = 'car-battery'  
+                    bieutuong = 'car-battery' 
                 elif ('luuluong' in str(tram[2])) or ('Luu Luong' in str(tram[3])):
                     bieutuong = 'waves-arrow-right '     
                 else:
@@ -138,25 +152,67 @@ class SOLIEU_KTTV(MDApp):
                     on_release=self.tram_pressed
                 )
                 # gán su kien cho icon
-                self.root.ids.tramkttv_tinh.add_widget(icon_item)
-                
+                if  bieutuong == "weather-partly-rainy":
+                    self.root.ids.tramkttv_mua_tinh.add_widget(icon_item)
+                elif bieutuong == "waves-arrow-up":
+                    self.root.ids.tramkttv_mucnuoc_tinh.add_widget(icon_item)
+                elif bieutuong == "wind-power":
+                    self.root.ids.tramkttv_gio_tinh.add_widget(icon_item)
+                elif bieutuong == "temperature-celsius":
+                    self.root.ids.tramkttv_nhiet_tinh.add_widget(icon_item)
+                else:
+                    self.root.ids.tramkttv_ap_tinh.add_widget(icon_item)
+    
     def search_tram(self, search_text):# su kien tìm kiếm
-        self.root.ids.tramkttv_tinh.clear_widgets()
+        self.root.ids.tramkttv_mua_tinh.clear_widgets()
+        self.root.ids.tramkttv_gio_tinh.clear_widgets()
+        self.root.ids.tramkttv_mucnuoc_tinh.clear_widgets()
+        self.root.ids.tramkttv_nhiet_tinh.clear_widgets()
+        self.root.ids.tramkttv_ap_tinh.clear_widgets()
+
         # self.root.ids.hintexx.helper_text = self.root.ids.tieude_solieu.title
-        # tentinh = self.ten_tinh_txt(search_text)
-        ds_tram = np.genfromtxt('tinh/TTB.txt', delimiter=',', dtype=None, names=True, encoding=None)
+        tentinh = self.ten_tinh_txt(self.root.ids.tieude_solieu.title)
+        ds_tram = np.genfromtxt('tinh/' + tentinh, delimiter=',', dtype=None, names=True, encoding=None)
         for tram in ds_tram:
             if str(tram[1]) == str(search_text):
+                if 'mua' in str(tram[2]):
+                    bieutuong = "weather-partly-rainy"                    
+                elif 'mucnuoc' in str(tram[2]):
+                    bieutuong = 'waves-arrow-up'
+                elif ('Gio' in str(tram[2])) or ('gio' in str(tram[2]) or ('Gio' in str(tram[3]))):
+                    bieutuong = 'wind-power'
+                elif 'nhietdo' in str(tram[2]):
+                    bieutuong = 'temperature-celsius'
+                elif 'khiap' in str(tram[2]):
+                    bieutuong = 'car-brake-low-pressure'
+                elif 'doam' in str(tram[2]):
+                    bieutuong = 'cloud-percent' 
+                elif 'nguon' in str(tram[2]):
+                    bieutuong = 'car-battery' 
+                elif ('luuluong' in str(tram[2])) or ('Luu Luong' in str(tram[3])):
+                    bieutuong = 'waves-arrow-right '     
+                else:
+                    bieutuong = ''
                 icon_item = OneLineIconListItem(
-                    IconLeftWidget(icon="weather-partly-rainy"),
+                    IconLeftWidget(icon=bieutuong),
                     text=tram[1] + ' - ' + tram[3],
                     on_release=self.tram_pressed
                 )
                 # gán su kien cho icon
-                self.root.ids.tramkttv_tinh.add_widget(icon_item)
+                if  bieutuong == "weather-partly-rainy":
+                    self.root.ids.tramkttv_mua_tinh.add_widget(icon_item)
+                elif bieutuong == "waves-arrow-up":
+                    self.root.ids.tramkttv_mucnuoc_tinh.add_widget(icon_item)
+                elif bieutuong == "wind-power":
+                    self.root.ids.tramkttv_gio_tinh.add_widget(icon_item)
+                elif bieutuong == "temperature-celsius":
+                    self.root.ids.tramkttv_nhiet_tinh.add_widget(icon_item)
+                else:
+                    self.root.ids.tramkttv_ap_tinh.add_widget(icon_item)
     
     def tram_pressed(self,instance): # su kien click vao tram
         clicked_text = instance.text
+        print('bạn đã click vào:' + clicked_text)
         app = MDApp.get_running_app()
         app.root.current = 'tram'
         self.root.ids.solieutram.clear_widgets()
@@ -190,6 +246,49 @@ class SOLIEU_KTTV(MDApp):
 
     def callback_for_menu_items(self, *args):
         toast(args[0])
+
+    # def plot_map(self,x,y):
+    #     plot = MeshLinePlot(color=[1, 0, 0, 1]) 
+    #     plot.points = [(x, sin(x)) for x in range(0, 101)]
+    #     graph = Graph(xlabel='X', ylabel='Y', x_ticks_minor=5,
+    #                 x_ticks_major=25, y_ticks_major=1,
+    #                 y_grid_label=True, x_grid_label=True, padding=5,
+    #                 x_grid=True, y_grid=True, xmin=-0, xmax=100, ymin=-1, ymax=1)
+    #     graph.add_plot(plot)
+
+    def vebieudo(self,*args):
+        
+        # tg=  []
+        gt = []
+        for child in self.root.ids.solieutram.children:
+            dl = str(child.text).split(':')
+            gt.append(float(dl[3].strip()))
+        tentram = self.root.ids.tieude_tram.title   # lay ten yeo to ve
+        print(tentram)
+        if 'Mua' in tentram:
+            result_list = []
+            cumulative_sum = 0
+            for num in gt:
+                cumulative_sum += num
+                result_list.append(cumulative_sum)
+            gt  = result_list
+        #     k+=1
+        print(gt)
+        # print(tg)
+        app = MDApp.get_running_app()
+        app.root.current = 'bieudo'
+        
+        self.root.ids.dothive.clear_widgets()
+        # if 'Muc Nuoc' in tentram:
+        self.graph = Graph(xlabel='X', ylabel='Y', x_ticks_minor=5,
+        x_ticks_major=10, y_ticks_major=10,
+        y_grid_label=True, x_grid_label=True, padding=30,
+        x_grid=True, y_grid=True, xmin=-0, xmax=len(gt), ymin=min(gt)-0.2, ymax=max(gt)+0.2)
+        plot = MeshLinePlot(color=[1, 0, 0, 1])
+        # plot.points = [(x, sin(x / 10.)) for x in range(0, 101)]
+        plot.points = [(t, g) for t, g in enumerate(gt)]
+        self.graph.add_plot(plot)
+        self.root.ids.dothive.add_widget(self.graph)
 
     # def show_example_grid_bottom_sheet(self):
     #     # pass
@@ -262,14 +361,14 @@ class SOLIEU_KTTV(MDApp):
     def TTB_API(self,matram,ten_bang):
         now = datetime.now()
         kt = datetime(now.year,now.month,now.day,now.hour)
-        bd = kt - timedelta(days=1)
+        bd = kt - timedelta(days=3)
         # mua
         pth = 'http://113.160.225.84:2018/API_TTB/JSON/solieu.php?matram={}&ten_table={}&sophut=60&tinhtong=0&thoigianbd=%27{}%2000:00:00%27&thoigiankt=%27{}%2023:59:00%27'
         pth = pth.format(matram,ten_bang,bd.strftime('%Y-%m-%d'),kt.strftime('%Y-%m-%d'))
-        print(pth)
+        # print(pth)
         response = requests.get(pth)
         mua = np.array(response.json())
-        print(mua)
+        # print(mua)
         # if len(mua) < 5:
         #     return '-','-'
         return mua

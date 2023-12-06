@@ -124,41 +124,157 @@
                 MDTopAppBar:
                     md_bg_color: app.theme_cls.primary_color
                     elevation:1
-                    title:'ĐÀI KTTV TTB'
+                    title:'Khu vực Trung Trung Bộ'
     MDScreen:
         name:'solieu'
-        MDBoxLayout:
-            orientation: 'vertical'
-            md_bg_color: 1, 1, 1, 1
-            MDTopAppBar:
-                id:tieude_solieu
-                md_bg_color: app.theme_cls.primary_color
-                elevation:2
-                title:''
-                left_action_items: [['arrow-left-thick', lambda x: app.callback_trangchu()]]
-                MDTextField:
-                    icon_right: "magnify"
-                    id: hintexx
-                    hint_text: "Tìm kiếm"
-                    on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
-                    mode: "round"
-                    # pos_hint: {"center_x": .5, "center_y": .5}
-            MDBoxLayout:
-                size_hint: None,None
-                size: (root.width * 0.96, root.height * 0.90)
-                padding:10
-                orientation: 'vertical'
-                MDScrollView:
-                    MDList:
-                        id: tramkttv_tinh
                             # md_bg_color:0, 0, 0, 0.8    
-            # MDTextField:
-            #     icon_right: "magnify"
-            #     id: hintexx
-            #     hint_text: "Tìm kiếm"
-            #     on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
-            #     mode: "round"
-                # pos_hint:{'top':.5}
+        MDBottomNavigation:
+            MDBottomNavigationItem:
+                name: 'mua'
+                text: 'Mưa'
+                icon: 'weather-lightning-rainy'
+                # badge_icon: "numeric-10"
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    # md_bg_color: 1, 1, 1, 1
+                    MDTopAppBar:
+                        id:tieude_solieu
+                        md_bg_color: app.theme_cls.primary_color
+                        elevation:2
+                        title:''
+                        # right_action_items: [["magnify", lambda x: app.search_tram(self.text)]]
+                        left_action_items: [['arrow-left-thick', lambda x: app.callback_trangchu()]]
+                        MDTextField:
+                            icon_right: "magnify"
+                            id: hintexx
+                            hint_text: "Tìm kiếm"
+                            on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
+                            mode: "round"
+                        #     # pos_hint: {"center_x": .5, "center_y": .5}
+                    MDBoxLayout:
+                        size_hint: None,None
+                        size: (root.width * 0.96, root.height * 0.80)
+                        padding:10
+                        orientation: 'vertical'
+                        MDScrollView:
+                            MDList:
+                                id: tramkttv_mua_tinh
+
+            MDBottomNavigationItem:
+                name: 'mucnuoc'
+                text: 'Mực nước'
+                icon: 'waves-arrow-up'
+                # badge_icon: "numeric-5"
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    MDTopAppBar:
+                        id:tieude_solieu
+                        md_bg_color: app.theme_cls.primary_color
+                        elevation:2
+                        title:''
+                        right_action_items: [["magnify", lambda x: app.search_tram(self.text)]]
+                        left_action_items: [['home', lambda x: app.callback_trangchu()]]
+                        MDTextField:
+                            icon_right: "magnify"
+                            id: hintexx
+                            hint_text: "Tìm kiếm"
+                            on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
+                            mode: "round"
+                        #     # pos_hint: {"center_x": .5, "center_y": .5}
+                    MDBoxLayout:
+                        size_hint: None,None
+                        size: (root.width * 0.96, root.height * 0.80)
+                        padding:10
+                        orientation: 'vertical'
+                        MDScrollView:
+                            MDList:
+                                id: tramkttv_mucnuoc_tinh
+            MDBottomNavigationItem:
+                name: 'gio'
+                text: 'Gió'
+                icon: 'wind-power-outline'
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    MDTopAppBar:
+                        id:tieude_solieu
+                        md_bg_color: app.theme_cls.primary_color
+                        elevation:2
+                        title:''
+                        # right_action_items: [["chart-scatter-plot", lambda x: app.vebieudo]]
+                        left_action_items: [['home', lambda x: app.callback_trangchu()]]
+                        MDTextField:
+                            icon_right: "magnify"
+                            id: hintexx
+                            hint_text: "Tìm kiếm"
+                            on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
+                            mode: "round"
+                        #     # pos_hint: {"center_x": .5, "center_y": .5}
+                    MDBoxLayout:
+                        size_hint: None,None
+                        size: (root.width * 0.96, root.height * 0.80)
+                        padding:10
+                        orientation: 'vertical'
+                        MDScrollView:
+                            MDList:
+                                id: tramkttv_gio_tinh
+            MDBottomNavigationItem:
+                name: 'nhiet'
+                text: 'Nhiệt'
+                icon: 'temperature-celsius'
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    MDTopAppBar:
+                        id:tieude_solieu
+                        md_bg_color: app.theme_cls.primary_color
+                        elevation:2
+                        title:''
+                        # right_action_items: [["magnify", lambda x: app.search_tram(self.text)]]
+                        left_action_items: [['home', lambda x: app.callback_trangchu()]]
+                        MDTextField:
+                            icon_right: "magnify"
+                            id: hintexx
+                            hint_text: "Tìm kiếm"
+                            on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
+                            mode: "round"
+                        #     # pos_hint: {"center_x": .5, "center_y": .5}
+                    MDBoxLayout:
+                        size_hint: None,None
+                        size: (root.width * 0.96, root.height * 0.80)
+                        padding:10
+                        orientation: 'vertical'
+                        MDScrollView:
+                            MDList:
+                                id: tramkttv_nhiet_tinh      
+            MDBottomNavigationItem:
+                name: 'ap'
+                text: 'Khác'
+                id:yeutokhac
+                icon: 'vector-difference'
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    MDTopAppBar:
+                        id:tieude_solieu
+                        md_bg_color: app.theme_cls.primary_color
+                        elevation:2
+                        title:''
+                        # right_action_items: [["magnify", lambda x: app.search_tram(self.text)]]
+                        left_action_items: [['arrow-left-thick', lambda x: app.callback_trangchu()]]
+                        MDTextField:
+                            icon_right: "magnify"
+                            id: hintexx
+                            hint_text: "Tìm kiếm"
+                            on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
+                            mode: "round"
+                        #     # pos_hint: {"center_x": .5, "center_y": .5}
+                    MDBoxLayout:
+                        size_hint: None,None
+                        size: (root.width * 0.96, root.height * 0.80)
+                        padding:10
+                        orientation: 'vertical'
+                        MDScrollView:
+                            MDList:
+                                id: tramkttv_ap_tinh      
+
     MDScreen:
         name:'tram'
         MDBoxLayout:
@@ -169,6 +285,7 @@
                 md_bg_color: app.theme_cls.primary_color
                 elevation:2
                 title:''
+                right_action_items: [["chart-scatter-plot", lambda x: app.vebieudo()]]
                 left_action_items: [['arrow-left-thick', lambda x: app.callback_solieu()]]
 
             MDBoxLayout:
@@ -177,7 +294,30 @@
                 MDScrollView:
                     MDList:
                         id: solieutram
+    MDScreen:
+        name:'bieudo'
+        MDBoxLayout:
+            orientation: 'vertical'
+            md_bg_color: 1, 1, 1, 1
+            MDTopAppBar:
+                id:tieude_tram
+                md_bg_color: app.theme_cls.primary_color
+                elevation:2
+                title:'Biểu đồ'
+                left_action_items: [['arrow-left-thick', lambda x:app.callback_solieu()]]
 
+            MDBoxLayout:                
+                orientation: 'vertical'
+                id:dothive
+                padding: 1
+                size_hint: 1, 0.9
+                # GraphWidget:
+                    
+                #     size_hint: 1, 0.8
+                #     # text: 'ban do o day'
+                #     Graph:
+                #         id: graph
+                #         size_hint: 1, 1
 <RectangularRippleButton>:
 <RectangularRippleImage>:
 <NCard@MDBoxLayout>:
@@ -194,3 +334,8 @@
             size:self.size
             pos:self.pos[0]-6,self.pos[1]+4
             radius:[20]
+
+# <GraphWidget@Widget>:
+#     Graph:
+#         id: graph
+#         size_hint: 1, 1
