@@ -37,11 +37,15 @@ from kivy.metrics import dp
 from kivymd.icon_definitions import md_icons
 from kivymd.uix.gridlayout import MDGridLayout
 from math import sin
-from kivy_garden.graph import Graph, MeshLinePlot
+from kivy_garden.graph import Graph,BarPlot,LinePlot
 # from kivy.uix.widget import Widget
 # from kivy.properties import ObjectProperty
+from kivy.properties import NumericProperty
+# import matplotlib
+# matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
 # import matplotlib.pyplot as plt
-# from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
+# from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg,NavigationToolbar
+# from kivy_garden.
 # Window.size = (350, 600)
 
 # class GraphWidget(Widget):
@@ -71,15 +75,16 @@ class RectangularRippleButton(MDBoxLayout, RectangularRippleBehavior, ButtonBeha
 class RectangularRippleImage(CircularRippleBehavior, ButtonBehavior, Image):
     pass
 
-
 class SOLIEU_KTTV(MDApp):
+    zoom = NumericProperty(1)
     def build(self):
         self.title = "KTTV TTB"
         self.theme_cls.primary_palette = "LightBlue"
         Builder.load_file('main.kv')
+        # Builder.load_file('vidu.kv')
         self.scr = Homescreen()
         self.scr.current = 'trangchu'
-        # self.scr.ids.bottom_navigation.switch_tab('chart')
+        # self.scr.current = 'tram'
         return self.scr
 
     def on_start(self):
@@ -93,6 +98,7 @@ class SOLIEU_KTTV(MDApp):
             )
             # gán su kien cho icon
             self.root.ids.provin.add_widget(icon_item)
+
 
     def ten_tinh_txt(self,tentinh):
         if tentinh=='Quang Ngai':
@@ -212,7 +218,7 @@ class SOLIEU_KTTV(MDApp):
     
     def tram_pressed(self,instance): # su kien click vao tram
         clicked_text = instance.text
-        print('bạn đã click vào:' + clicked_text)
+        # print('bạn đã click vào:' + clicked_text)
         app = MDApp.get_running_app()
         app.root.current = 'tram'
         self.root.ids.solieutram.clear_widgets()
@@ -226,10 +232,15 @@ class SOLIEU_KTTV(MDApp):
         for tram in ds_tram:
             if str(tram[1]) == str(tentram) and str(tram[3]) == str(yeuto):
                 solieu = self.TTB_API(tram[0],tram[2])
-                # print(solieu)
+                print(solieu)
+                for tencot in solieu:
+                    if 'SoLieu'in tencot:
+                        tencot_sl = 'SoLieu'
+                    else:
+                        tencot_sl = 'Solieu'
                 for value in range(len(solieu) - 1, -1, -1):
                     icon_item = OneLineIconListItem(
-                        text=solieu[value]['Thoigian_SL'] + ' : ' + solieu[value]['Solieu']
+                        text=solieu[value]['Thoigian_SL'] + ' : ' + solieu[value][tencot_sl]
                     )
                     # gán su kien cho icon
                     self.root.ids.solieutram.add_widget(icon_item)
@@ -247,24 +258,17 @@ class SOLIEU_KTTV(MDApp):
     def callback_for_menu_items(self, *args):
         toast(args[0])
 
-    # def plot_map(self,x,y):
-    #     plot = MeshLinePlot(color=[1, 0, 0, 1]) 
-    #     plot.points = [(x, sin(x)) for x in range(0, 101)]
-    #     graph = Graph(xlabel='X', ylabel='Y', x_ticks_minor=5,
-    #                 x_ticks_major=25, y_ticks_major=1,
-    #                 y_grid_label=True, x_grid_label=True, padding=5,
-    #                 x_grid=True, y_grid=True, xmin=-0, xmax=100, ymin=-1, ymax=1)
-    #     graph.add_plot(plot)
-
-    def vebieudo(self,*args):
-        
-        # tg=  []
+    def vebieudo(self,**kwargs):
         gt = []
+        tg = []
         for child in self.root.ids.solieutram.children:
+            # print(child.text)
             dl = str(child.text).split(':')
             gt.append(float(dl[3].strip()))
+            tg.append(datetime.strptime(dl[0].strip() + ':' + dl[1].strip(),"%Y-%m-%d %H:%M"))
         tentram = self.root.ids.tieude_tram.title   # lay ten yeo to ve
-        print(tentram)
+        # print(tentram)
+        # print(gt)
         if 'Mua' in tentram:
             result_list = []
             cumulative_sum = 0
@@ -272,23 +276,118 @@ class SOLIEU_KTTV(MDApp):
                 cumulative_sum += num
                 result_list.append(cumulative_sum)
             gt  = result_list
-        #     k+=1
-        print(gt)
-        # print(tg)
+
+        # # print(gt)
+        # # print(tg)
         app = MDApp.get_running_app()
         app.root.current = 'bieudo'
+        # 
+        self.root.ids.modulation.clear_widgets()
+        if len(gt) >3:
+            gt =np.array(gt)
+            if 'Mua' in tentram:
+                val_y_tick = (round(int(max(gt)),-1) + 10) - (round(int(min(gt)),-1)-10)
+                val_y_tick = val_y_tick/10
+                ymax = round(int(max(gt)),-1)+10
+                ymin = 0
+            else:
+                if 'Muc Nuoc' in tentram:
+                    gt = [x * 100 for x in gt]
+                # print(gt)
+                # print(max(gt))
+                # print(round(int(max(gt)),-1))
+                val_y_tick = (round(int(max(gt)),-1) + 10) - (round(int(min(gt)),-1)-10)
+                val_y_tick = val_y_tick/10
+                ymax = round(int(max(gt)),-1)+10
+                ymin = round(int(min(gt)),-1)-10    
+                
+            self.samples = len(gt)
+            self.graph = Graph(y_ticks_major=val_y_tick,
+                    x_ticks_major=10,
+                    border_color=[0, 0, 1, 1],
+                    tick_color=[0, 1, 1, 0.7],
+                    x_grid=True, y_grid=True,
+                    xmin=-0, xmax=self.samples,
+                    ymin=ymin, ymax=ymax,
+                    draw_border=True,
+                    x_grid_label=True, y_grid_label=True,
+                    xlabel='Thời gian',ylabel=str(tentram))
+
+            self.root.ids.modulation.add_widget(self.graph)
+            self.plot = LinePlot(color=[1, 0, 0, 1],line_width=1.5)
+            self.graph.add_plot(self.plot)
+            self.plot.points = [(t, g) for t, g in enumerate(gt)]
+            # self.update_plot(1)
+    def vebieudo_bar(self,**kwargs):
+        tentram = self.root.ids.tieude_tram.title   # lay ten yeo to ve
+        if 'Mua' in tentram:
+            gt = []
+            tg = []
+            for child in self.root.ids.solieutram.children:
+                # print(child.text)
+                dl = str(child.text).split(':')
+                gt.append(float(dl[3].strip()))
+                tg.append(datetime.strptime(dl[0].strip() + ':' + dl[1].strip(),"%Y-%m-%d %H:%M"))
+            # print(tentram)
+            # print(gt)
+            # # print(gt)
+            # # print(tg)
+            app = MDApp.get_running_app()
+            app.root.current = 'bieudo'
+            # 
+            self.root.ids.modulation.clear_widgets()
+
+            if len(gt) >3:
+                gt =np.array(gt)              
+                if 'Mua' in tentram:
+                    val_y_tick = (round(int(max(gt)),-1) + 10) - (round(int(min(gt)),-1)-10)
+                    val_y_tick = val_y_tick/5
+                    ymax = round(int(max(gt)),-1)+10
+                    ymin = 0
+                    
+                self.samples = len(gt)
+                self.graph = Graph(y_ticks_major=val_y_tick,
+                        x_ticks_major=10,
+                        border_color=[0, 0, 1, 1],
+                        tick_color=[0, 1, 1, 0.7],
+                        x_grid=True, y_grid=True,
+                        xmin=-0, xmax=self.samples,
+                        ymin=ymin, ymax=ymax,
+                        draw_border=True,
+                        x_grid_label=True, y_grid_label=True,
+                        xlabel='Thời gian',ylabel=str(tentram))
+
+                self.root.ids.modulation.add_widget(self.graph)
+                self.plot = BarPlot(color=[1, 0, 0, 1],bar_width=1.5)
+                self.graph.add_plot(self.plot)
+                self.plot.points = [(t, g) for t, g in enumerate(gt)]
+            # self.update_plot(1)
+    
+    
+    # def update_plot(self, freq):
+    #     now = datetime.now()
+    #     gt = []
+    #     tg = []
+    #     for child in self.root.ids.solieutram.children:
+    #         # print(child.text)
+    #         dl = str(child.text).split(':')
+    #         gt.append(float(dl[3].strip()))
+    #         tg.append(datetime.strptime(dl[0].strip() + ':' + dl[1].strip(),"%Y-%m-%d %H:%M"))
         
-        self.root.ids.dothive.clear_widgets()
-        # if 'Muc Nuoc' in tentram:
-        self.graph = Graph(xlabel='X', ylabel='Y', x_ticks_minor=5,
-        x_ticks_major=10, y_ticks_major=10,
-        y_grid_label=True, x_grid_label=True, padding=30,
-        x_grid=True, y_grid=True, xmin=-0, xmax=len(gt), ymin=min(gt)-0.2, ymax=max(gt)+0.2)
-        plot = MeshLinePlot(color=[1, 0, 0, 1])
-        # plot.points = [(x, sin(x / 10.)) for x in range(0, 101)]
-        plot.points = [(t, g) for t, g in enumerate(gt)]
-        self.graph.add_plot(plot)
-        self.root.ids.dothive.add_widget(self.graph)
+    #     self.plot_y = np.sin(2*np.pi*freq*self.plot_x)
+    #     self.plot.points = [(x, self.plot_y[x]) for x in range(self.samples)]
+        
+    # def update_zoom(self, value):
+    #     if value == '+' and self.zoom < 8:
+    #         self.zoom *= 2
+    #         self.graph.x_ticks_major /= 2
+    #     elif value == '-' and self.zoom > 1:
+    #         self.zoom /= 2
+    #         self.graph.x_ticks_major *= 2
+    #     self.update_plot(1)
+    # def update_plot(self, freq):
+    #     self.plot_y = np.sin(2*np.pi*freq*self.plot_x)
+    #     self.plot.points = [(x, self.plot_y[x]) for x in range(self.samples)]
 
     # def show_example_grid_bottom_sheet(self):
     #     # pass
@@ -359,12 +458,16 @@ class SOLIEU_KTTV(MDApp):
     
     
     def TTB_API(self,matram,ten_bang):
+        if 'mua' in ten_bang:
+            tinhtong = 1
+        else:
+            tinhtong = 0
         now = datetime.now()
         kt = datetime(now.year,now.month,now.day,now.hour)
         bd = kt - timedelta(days=3)
         # mua
-        pth = 'http://113.160.225.84:2018/API_TTB/JSON/solieu.php?matram={}&ten_table={}&sophut=60&tinhtong=0&thoigianbd=%27{}%2000:00:00%27&thoigiankt=%27{}%2023:59:00%27'
-        pth = pth.format(matram,ten_bang,bd.strftime('%Y-%m-%d'),kt.strftime('%Y-%m-%d'))
+        pth = 'http://113.160.225.84:2018/API_TTB/JSON/solieu.php?matram={}&ten_table={}&sophut=60&tinhtong={}&thoigianbd=%27{}%2000:00:00%27&thoigiankt=%27{}%2023:59:00%27'
+        pth = pth.format(matram,ten_bang,tinhtong,bd.strftime('%Y-%m-%d'),kt.strftime('%Y-%m-%d'))
         # print(pth)
         response = requests.get(pth)
         mua = np.array(response.json())

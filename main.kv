@@ -1,4 +1,6 @@
+#:import utils kivy.utils
 <Homescreen>:
+    name: 'taotrang'
     MDScreen:
         md_bg_color:239/255,243/255,246/255,1
         name:"SingIn"
@@ -125,6 +127,7 @@
                     md_bg_color: app.theme_cls.primary_color
                     elevation:1
                     title:'Khu vực Trung Trung Bộ'
+                    
     MDScreen:
         name:'solieu'
                             # md_bg_color:0, 0, 0, 0.8    
@@ -161,6 +164,7 @@
                                 id: tramkttv_mua_tinh
 
             MDBottomNavigationItem:
+                id: hhhhhh
                 name: 'mucnuoc'
                 text: 'Mực nước'
                 icon: 'waves-arrow-up'
@@ -294,30 +298,182 @@
                 MDScrollView:
                     MDList:
                         id: solieutram
-    MDScreen:
-        name:'bieudo'
-        MDBoxLayout:
-            orientation: 'vertical'
-            md_bg_color: 1, 1, 1, 1
-            MDTopAppBar:
-                id:tieude_tram
-                md_bg_color: app.theme_cls.primary_color
-                elevation:2
-                title:'Biểu đồ'
-                left_action_items: [['arrow-left-thick', lambda x:app.callback_solieu()]]
 
-            MDBoxLayout:                
+    MDScreen:
+        name: 'bieudo'
+        canvas.before:
+            Color:
+                rgb: utils.get_color_from_hex('#212946')
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        MDBoxLayout:
+            size_hint: 1, 1
+            orientation: 'vertical'
+            padding: 10, 10, 0, 10
+            MDTopAppBar:
+                # id:tieude_tram_bieudo
+                md_bg_color: app.theme_cls.primary_color
+                elevation:0.8
+                title:''
+                # size_hint: 1, 0.2
+                right_action_items: [["chart-bar", lambda x: app.vebieudo_bar()]]
+                left_action_items: [['arrow-left-thick', lambda x: app.callback_solieu()]]
+
+            MDScrollView:
+                id: view
+                do_scroll_x: True
+                do_scroll_y: False
                 orientation: 'vertical'
-                id:dothive
-                padding: 1
-                size_hint: 1, 0.9
-                # GraphWidget:
+                size_hint: 1, 0.5
+                valign: 'middle'
+                bar_width: 4
+                bar_color: 1, 1, 1, 1
+                bar_inactive_color: 1, 1, 1, 0.5
+                scroll_type: ['content']
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint: None, 1
+                    width: root.width
+                    MDBoxLayout:
+                        id: modulation
+                        size_hint_x: 1
+                        size_hint_y: 1
+
+            # BoxLayout:
+            #     id: zoom
+            #     orientation: 'horizontal'
+            #     size_hint: 1, 0.1
+            #     padding: 10
+
+            #     Button:
+            #         text: '-'
+            #         size_hint_x: None
+            #         width: self.height
+            #         on_release: app.update_zoom(self.text)
+
+            #     Label:
+            #         text: str(int(app.zoom)) + ' ngày'
+            #         # text:  '25x'
+            #     Button:
+            #         text: '+'
+            #         size_hint_x: None
+            #         width: self.height
+            #         on_release: app.update_zoom(self.text)
+
+            BoxLayout:
+                size_hint: 1, 0.1
+                orientation: 'vertical'
+
+                Label:
+                    text: 'Thời gian: ' + str(freq.value) + ' ngày'
+
+                Slider:
+                    id: freq
+                    min: 1
+                    max: 3
+                    step: 1
+                    # on_value: app.update_plot(freq.value)
+
+            BoxLayout:
+                size_hint: 1, 0.3
+
+    # MDScreen:
+    #     name:'bieudo'
+    #     MDBoxLayout:
+        # #     size_hint: 1, 1
+        # #     orientation: 'vertical'
+        # #     MDTopAppBar:
+        # #         id:tieude_tram
+        # #         md_bg_color: app.theme_cls.primary_color
+        # #         elevation:2
+        # #         title:'Biểu đồ'
+        # #         left_action_items: [['arrow-left-thick', lambda x:app.callback_solieu()]]
+
+        # #     MDBoxLayout:             
+        # #         orientation: 'vertical'
+        # #         id:dothive
+        # #         size_hint_x: 1
+        # #         size_hint_y: 1
+        # #         # padding: 1
+        # #         # size_hint: 1, 0.9
+        # #         # GraphWidget:
                     
-                #     size_hint: 1, 0.8
-                #     # text: 'ban do o day'
-                #     Graph:
-                #         id: graph
-                #         size_hint: 1, 1
+        # #         #     size_hint: 1, 0.8
+        # #         #     # text: 'ban do o day'
+        # #         #     Graph:
+        # #         #         id: graph
+        # #         #         size_hint: 1, 1
+        #     canvas.before:
+        #         Color:
+        #             rgb: utils.get_color_from_hex('#212946')
+        #         Rectangle:
+        #             pos: self.pos
+        #             size: self.size
+
+        #     BoxLayout:
+        #         size_hint: 1, 1
+        #         orientation: 'vertical'
+        #         padding: 10, 10, 0, 10
+
+        #         ScrollView:
+        #             id: view
+        #             do_scroll_x: True
+        #             do_scroll_y: False
+        #             orientation: 'vertical'
+        #             size_hint: 1, 0.5
+        #             valign: 'middle'
+        #             bar_width: 4
+        #             bar_color: 1, 1, 1, 1
+        #             bar_inactive_color: 1, 1, 1, 0.5
+        #             scroll_type: ['content']
+
+        #             BoxLayout:
+        #                 orientation: 'vertical'
+        #                 size_hint: None, 1
+        #                 width: view.width*root.zoom
+        #                 BoxLayout:
+        #                     id: modulation
+        #                     size_hint_x: 1
+        #                     size_hint_y: 1
+
+        #     BoxLayout:
+        #         id: zoom
+        #         orientation: 'horizontal'
+        #         size_hint: 1, 0.1
+        #         padding: 10
+
+        #         Button:
+        #             text: '-'
+        #             size_hint_x: None
+        #             width: self.height
+        #             on_release: root.update_zoom(self.text)
+
+        #         Label:
+        #             text: str(int(root.zoom)) + 'x'
+
+        #         Button:
+        #             text: '+'
+        #             size_hint_x: None
+        #             width: self.height
+        #             on_release: root.update_zoom(self.text)
+
+        #     BoxLayout:
+        #         size_hint: 1, 0.1
+        #         orientation: 'vertical'
+
+        #         Label:
+        #             text: 'Frequency: ' + str(freq.value) + ' hz'
+
+        #         Slider:
+        #             id: freq
+        #             min: 1
+        #             max: 100
+        #             step: 0.5
+        #             on_value: root.update_plot(freq.value)
+
+        #     BoxLayout:
+        #         size_hint: 1, 0.3
 <RectangularRippleButton>:
 <RectangularRippleImage>:
 <NCard@MDBoxLayout>:

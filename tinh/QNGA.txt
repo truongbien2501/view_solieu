@@ -1,31 +1,4 @@
 Ma tram,ten tram,TAB,Yeu To,tinh
-91643,Son Mua,hanquoc_mua,Mua,Quang Ngai
-91643,Son Mua,hanquoc_nguon,Nguon dataloger,Quang Ngai
-91644,Son Ba,hanquoc_mua,Mua,Quang Ngai
-91644,Son Ba,hanquoc_nguon,Nguon dataloger,Quang Ngai
-91645,Tra Phong,hanquoc_mua,Mua,Quang Ngai
-91645,Tra Phong,hanquoc_nguon,Nguon dataloger,Quang Ngai
-1201,Ba Lien,vrain_mua,Mua,Quang Ngai
-136740,Ba Nam,vrain_mua,Mua,Quang Ngai
-14692,Binh An,vrain_mua,Mua,Quang Ngai
-207491,Nghia Tho,vrain_mua,Mua,Quang Ngai
-35292,Tra Phong,vrain_mua,Mua,Quang Ngai
-354413,Ba Trang,vrain_mua,Mua,Quang Ngai
-355625,Long Son,vrain_mua,Mua,Quang Ngai
-355746,Ba Le,vrain_mua,Mua,Quang Ngai
-355760,Ba Dinh,vrain_mua,Mua,Quang Ngai
-355877,Thanh An,vrain_mua,Mua,Quang Ngai
-36619,Tra Tan,vrain_mua,Mua,Quang Ngai
-456874,Ba Trang,vrain_mua,Mua,Quang Ngai
-457122,Ba Nam,vrain_mua,Mua,Quang Ngai
-470684,Duc Phong,vrain_mua,Mua,Quang Ngai
-472622,Duc Phu,vrain_mua,Mua,Quang Ngai
-473942,Nghia Trung,vrain_mua,Mua,Quang Ngai
-476310,Ba Dien,vrain_mua,Mua,Quang Ngai
-478645,Binh Tan,vrain_mua,Mua,Quang Ngai
-483909,Tra Phu,vrain_mua,Mua,Quang Ngai
-485806,Binh Khuong,vrain_mua,Mua,Quang Ngai
-501833,Ba Vinh,vrain_mua,Mua,Quang Ngai
 551900,Son Giang,mua_oday_thuyvan,Mua,Quang Ngai
 551900,Son Giang,mucnuoc_oday,Muc Nuoc,Quang Ngai
 551900,Son Giang,nguondataloger_oday,Nguon dataloger,Quang Ngai
@@ -101,6 +74,33 @@ Ma tram,ten tram,TAB,Yeu To,tinh
 558100,Minh Long,nguondataloger_oday,Nguon dataloger,Quang Ngai
 561700,Dung Quat Idro,mucnuoc_oday,Muc Nuoc,Quang Ngai
 561700,Dung Quat Idro,nguondataloger_oday,Nguon dataloger,Quang Ngai
+91643,Son Mua,hanquoc_mua,Mua,Quang Ngai
+91643,Son Mua,hanquoc_nguon,Nguon dataloger,Quang Ngai
+91644,Son Ba,hanquoc_mua,Mua,Quang Ngai
+91644,Son Ba,hanquoc_nguon,Nguon dataloger,Quang Ngai
+91645,Tra Phong,hanquoc_mua,Mua,Quang Ngai
+91645,Tra Phong,hanquoc_nguon,Nguon dataloger,Quang Ngai
+1201,Ba Lien,vrain_mua,Mua,Quang Ngai
+136740,Ba Nam,vrain_mua,Mua,Quang Ngai
+14692,Binh An,vrain_mua,Mua,Quang Ngai
+207491,Nghia Tho,vrain_mua,Mua,Quang Ngai
+35292,Tra Phong,vrain_mua,Mua,Quang Ngai
+354413,Ba Trang,vrain_mua,Mua,Quang Ngai
+355625,Long Son,vrain_mua,Mua,Quang Ngai
+355746,Ba Le,vrain_mua,Mua,Quang Ngai
+355760,Ba Dinh,vrain_mua,Mua,Quang Ngai
+355877,Thanh An,vrain_mua,Mua,Quang Ngai
+36619,Tra Tan,vrain_mua,Mua,Quang Ngai
+456874,Ba Trang,vrain_mua,Mua,Quang Ngai
+457122,Ba Nam,vrain_mua,Mua,Quang Ngai
+470684,Duc Phong,vrain_mua,Mua,Quang Ngai
+472622,Duc Phu,vrain_mua,Mua,Quang Ngai
+473942,Nghia Trung,vrain_mua,Mua,Quang Ngai
+476310,Ba Dien,vrain_mua,Mua,Quang Ngai
+478645,Binh Tan,vrain_mua,Mua,Quang Ngai
+483909,Tra Phu,vrain_mua,Mua,Quang Ngai
+485806,Binh Khuong,vrain_mua,Mua,Quang Ngai
+501833,Ba Vinh,vrain_mua,Mua,Quang Ngai
 625170,Tra Bui,vrain_mua,Mua,Quang Ngai
 75561,Son Ky,vrain_mua,Mua,Quang Ngai
 75771,Son Bua,vrain_mua,Mua,Quang Ngai
