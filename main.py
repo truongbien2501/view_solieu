@@ -303,7 +303,7 @@ class SOLIEU_KTTV(MDApp):
                 
             self.samples = len(gt)
             self.graph = Graph(y_ticks_major=val_y_tick,
-                    x_ticks_major=10,
+                    x_ticks_major=6,
                     border_color=[0, 0, 1, 1],
                     tick_color=[0, 1, 1, 0.7],
                     x_grid=True, y_grid=True,
@@ -311,7 +311,7 @@ class SOLIEU_KTTV(MDApp):
                     ymin=ymin, ymax=ymax,
                     draw_border=True,
                     x_grid_label=True, y_grid_label=True,
-                    xlabel='Thời gian',ylabel=str(tentram))
+                    xlabel='Giờ',ylabel=str(tentram))
 
             self.root.ids.modulation.add_widget(self.graph)
             self.plot = LinePlot(color=[1, 0, 0, 1],line_width=1.5)
@@ -347,7 +347,7 @@ class SOLIEU_KTTV(MDApp):
                     
                 self.samples = len(gt)
                 self.graph = Graph(y_ticks_major=val_y_tick,
-                        x_ticks_major=10,
+                        x_ticks_major=6,
                         border_color=[0, 0, 1, 1],
                         tick_color=[0, 1, 1, 0.7],
                         x_grid=True, y_grid=True,
@@ -355,7 +355,7 @@ class SOLIEU_KTTV(MDApp):
                         ymin=ymin, ymax=ymax,
                         draw_border=True,
                         x_grid_label=True, y_grid_label=True,
-                        xlabel='Thời gian',ylabel=str(tentram))
+                        xlabel='Giờ',ylabel=str(tentram))
 
                 self.root.ids.modulation.add_widget(self.graph)
                 self.plot = BarPlot(color=[1, 0, 0, 1],bar_width=1.5)
