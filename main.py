@@ -126,8 +126,7 @@ class SOLIEU_KTTV(MDApp):
         self.root.ids.tramkttv_nhiet_tinh.clear_widgets()
         self.root.ids.tramkttv_ap_tinh.clear_widgets()
         
-        
-        self.root.ids.tieude_solieu.title = tinh_click
+        self.root.ids.provin.title = tinh_click
         self.root.ids.hintexx.hint_text = "Tìm kiếm:" + tinh_click
         tentinh = self.ten_tinh_txt(tinh_click)
         ds_tram = np.genfromtxt('tinh/' + tentinh, delimiter=',', dtype=None, names=True, encoding=None)
@@ -226,13 +225,13 @@ class SOLIEU_KTTV(MDApp):
         tt_tram = clicked_text.split('-')
         tentram = str(tt_tram[0]).strip()
         yeuto = str(tt_tram[1]).strip()
-        tentinh = self.ten_tinh_txt(self.root.ids.tieude_solieu.title)
+        tentinh = self.ten_tinh_txt(self.root.ids.provin.title)
         # print(tentinh)
         ds_tram = np.genfromtxt('tinh/' + tentinh, delimiter=',', dtype=None, names=True, encoding=None)
         for tram in ds_tram:
             if str(tram[1]) == str(tentram) and str(tram[3]) == str(yeuto):
                 solieu = self.TTB_API(tram[0],tram[2])
-                print(solieu)
+                # print(solieu)
                 for tencot in solieu:
                     if 'SoLieu'in tencot:
                         tencot_sl = 'SoLieu'
@@ -259,6 +258,8 @@ class SOLIEU_KTTV(MDApp):
         toast(args[0])
 
     def vebieudo(self,**kwargs):
+        now = datetime.now()
+        now = datetime(now.year,now.month,now.day)
         gt = []
         tg = []
         for child in self.root.ids.solieutram.children:
@@ -267,7 +268,11 @@ class SOLIEU_KTTV(MDApp):
             gt.append(float(dl[3].strip()))
             tg.append(datetime.strptime(dl[0].strip() + ':' + dl[1].strip(),"%Y-%m-%d %H:%M"))
         tentram = self.root.ids.tieude_tram.title   # lay ten yeo to ve
-        # print(tentram)
+        
+        # index_date = tg.index(now)
+        # data_ve = gt[index_date:]
+        data_ve = gt
+        # print(data_ve)
         # print(gt)
         if 'Mua' in tentram:
             result_list = []
@@ -283,25 +288,25 @@ class SOLIEU_KTTV(MDApp):
         app.root.current = 'bieudo'
         # 
         self.root.ids.modulation.clear_widgets()
-        if len(gt) >3:
-            gt =np.array(gt)
+        if len(data_ve) >3:
+            data_ve =np.array(data_ve)
             if 'Mua' in tentram:
-                val_y_tick = (round(int(max(gt)),-1) + 10) - (round(int(min(gt)),-1)-10)
+                val_y_tick = (round(int(max(data_ve)),-1) + 10) - (round(int(min(data_ve)),-1)-10)
                 val_y_tick = val_y_tick/10
-                ymax = round(int(max(gt)),-1)+10
+                ymax = round(int(max(data_ve)),-1)+10
                 ymin = 0
             else:
                 if 'Muc Nuoc' in tentram:
-                    gt = [x * 100 for x in gt]
+                    data_ve = [x * 100 for x in data_ve]
                 # print(gt)
                 # print(max(gt))
                 # print(round(int(max(gt)),-1))
-                val_y_tick = (round(int(max(gt)),-1) + 10) - (round(int(min(gt)),-1)-10)
+                val_y_tick = (round(int(max(data_ve)),-1) + 10) - (round(int(min(data_ve)),-1)-10)
                 val_y_tick = val_y_tick/10
-                ymax = round(int(max(gt)),-1)+10
-                ymin = round(int(min(gt)),-1)-10    
+                ymax = round(int(max(data_ve)),-1)+10
+                ymin = round(int(min(data_ve)),-1)-10    
                 
-            self.samples = len(gt)
+            self.samples = len(data_ve)
             self.graph = Graph(y_ticks_major=val_y_tick,
                     x_ticks_major=6,
                     border_color=[0, 0, 1, 1],
@@ -316,9 +321,11 @@ class SOLIEU_KTTV(MDApp):
             self.root.ids.modulation.add_widget(self.graph)
             self.plot = LinePlot(color=[1, 0, 0, 1],line_width=1.5)
             self.graph.add_plot(self.plot)
-            self.plot.points = [(t, g) for t, g in enumerate(gt)]
-            # self.update_plot(1)
+            self.plot.points = [(t, g) for t, g in enumerate(data_ve)]
+
     def vebieudo_bar(self,**kwargs):
+        now = datetime.now()
+        now = datetime(now.year,now.month,now.day)
         tentram = self.root.ids.tieude_tram.title   # lay ten yeo to ve
         if 'Mua' in tentram:
             gt = []
@@ -332,20 +339,23 @@ class SOLIEU_KTTV(MDApp):
             # print(gt)
             # # print(gt)
             # # print(tg)
+            # index_date = tg.index(now)
+            # datave = gt[index_date:]
+            datave =gt
             app = MDApp.get_running_app()
             app.root.current = 'bieudo'
             # 
             self.root.ids.modulation.clear_widgets()
 
-            if len(gt) >3:
-                gt =np.array(gt)              
+            if len(datave) >3:
+                datave =np.array(datave)              
                 if 'Mua' in tentram:
                     val_y_tick = (round(int(max(gt)),-1) + 10) - (round(int(min(gt)),-1)-10)
                     val_y_tick = val_y_tick/5
                     ymax = round(int(max(gt)),-1)+10
                     ymin = 0
                     
-                self.samples = len(gt)
+                self.samples = len(datave)
                 self.graph = Graph(y_ticks_major=val_y_tick,
                         x_ticks_major=6,
                         border_color=[0, 0, 1, 1],
@@ -360,23 +370,10 @@ class SOLIEU_KTTV(MDApp):
                 self.root.ids.modulation.add_widget(self.graph)
                 self.plot = BarPlot(color=[1, 0, 0, 1],bar_width=1.5)
                 self.graph.add_plot(self.plot)
-                self.plot.points = [(t, g) for t, g in enumerate(gt)]
-            # self.update_plot(1)
-    
-    
-    # def update_plot(self, freq):
-    #     now = datetime.now()
-    #     gt = []
-    #     tg = []
-    #     for child in self.root.ids.solieutram.children:
-    #         # print(child.text)
-    #         dl = str(child.text).split(':')
-    #         gt.append(float(dl[3].strip()))
-    #         tg.append(datetime.strptime(dl[0].strip() + ':' + dl[1].strip(),"%Y-%m-%d %H:%M"))
-        
-    #     self.plot_y = np.sin(2*np.pi*freq*self.plot_x)
-    #     self.plot.points = [(x, self.plot_y[x]) for x in range(self.samples)]
-        
+                self.plot.points = [(t, g) for t, g in enumerate(datave)]
+
+
+
     # def update_zoom(self, value):
     #     if value == '+' and self.zoom < 8:
     #         self.zoom *= 2
@@ -388,7 +385,7 @@ class SOLIEU_KTTV(MDApp):
     # def update_plot(self, freq):
     #     self.plot_y = np.sin(2*np.pi*freq*self.plot_x)
     #     self.plot.points = [(x, self.plot_y[x]) for x in range(self.samples)]
-
+ 
     # def show_example_grid_bottom_sheet(self):
     #     # pass
     #     bottom_sheet_menu = MDGridBottomSheet()

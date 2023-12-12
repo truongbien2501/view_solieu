@@ -139,21 +139,24 @@
                 # badge_icon: "numeric-10"
                 MDBoxLayout:
                     orientation: 'vertical'
-                    # md_bg_color: 1, 1, 1, 1
-                    MDTopAppBar:
-                        id:tieude_solieu
+                    MDBoxLayout:
+                        orientation: 'vertical'
                         md_bg_color: app.theme_cls.primary_color
-                        elevation:2
-                        title:''
-                        # right_action_items: [["magnify", lambda x: app.search_tram(self.text)]]
-                        left_action_items: [['arrow-left-thick', lambda x: app.callback_trangchu()]]
-                        MDTextField:
-                            icon_right: "magnify"
-                            id: hintexx
-                            hint_text: "Tìm kiếm"
-                            on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
-                            mode: "round"
-                        #     # pos_hint: {"center_x": .5, "center_y": .5}
+                        MDGridLayout:
+                            cols:2
+                            rows:1
+                            MDIconButton:
+                                icon: "arrow-left-thick"
+                                size_hint: None,None
+                                pos_hint: {"center_x": .5, "center_y": .5}
+                                on_press: app.callback_trangchu()
+                            MDTextField:
+                                icon_right: "magnify"
+                                id: hintexx
+                                hint_text: "Tìm kiếm"
+                                on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
+                                mode: "round"
+                                pos_hint: {"center_x": .5, "center_y": .5}
                     MDBoxLayout:
                         size_hint: None,None
                         size: (root.width * 0.96, root.height * 0.80)
@@ -171,20 +174,24 @@
                 # badge_icon: "numeric-5"
                 MDBoxLayout:
                     orientation: 'vertical'
-                    MDTopAppBar:
-                        id:tieude_solieu
+                    MDBoxLayout:
+                        orientation: 'vertical'
                         md_bg_color: app.theme_cls.primary_color
-                        elevation:2
-                        title:''
-                        right_action_items: [["magnify", lambda x: app.search_tram(self.text)]]
-                        left_action_items: [['home', lambda x: app.callback_trangchu()]]
-                        MDTextField:
-                            icon_right: "magnify"
-                            id: hintexx
-                            hint_text: "Tìm kiếm"
-                            on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
-                            mode: "round"
-                        #     # pos_hint: {"center_x": .5, "center_y": .5}
+                        MDGridLayout:
+                            cols:2
+                            rows:1
+                            MDIconButton:
+                                icon: "arrow-left-thick"
+                                size_hint: None,None
+                                pos_hint: {"center_x": .5, "center_y": .5}
+                                on_press: app.callback_trangchu()
+                            MDTextField:
+                                icon_right: "magnify"
+                                id: hintexx
+                                hint_text: "Tìm kiếm"
+                                on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
+                                mode: "round"
+                                pos_hint: {"center_x": .5, "center_y": .5}
                     MDBoxLayout:
                         size_hint: None,None
                         size: (root.width * 0.96, root.height * 0.80)
@@ -199,20 +206,24 @@
                 icon: 'wind-power-outline'
                 MDBoxLayout:
                     orientation: 'vertical'
-                    MDTopAppBar:
-                        id:tieude_solieu
+                    MDBoxLayout:
+                        orientation: 'vertical'
                         md_bg_color: app.theme_cls.primary_color
-                        elevation:2
-                        title:''
-                        # right_action_items: [["chart-scatter-plot", lambda x: app.vebieudo]]
-                        left_action_items: [['home', lambda x: app.callback_trangchu()]]
-                        MDTextField:
-                            icon_right: "magnify"
-                            id: hintexx
-                            hint_text: "Tìm kiếm"
-                            on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
-                            mode: "round"
-                        #     # pos_hint: {"center_x": .5, "center_y": .5}
+                        MDGridLayout:
+                            cols:2
+                            rows:1
+                            MDIconButton:
+                                icon: "arrow-left-thick"
+                                size_hint: None,None
+                                pos_hint: {"center_x": .5, "center_y": .5}
+                                on_press: app.callback_trangchu()
+                            MDTextField:
+                                icon_right: "magnify"
+                                id: hintexx
+                                hint_text: "Tìm kiếm"
+                                on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
+                                mode: "round"
+                                pos_hint: {"center_x": .5, "center_y": .5}
                     MDBoxLayout:
                         size_hint: None,None
                         size: (root.width * 0.96, root.height * 0.80)
@@ -227,20 +238,24 @@
                 icon: 'temperature-celsius'
                 MDBoxLayout:
                     orientation: 'vertical'
-                    MDTopAppBar:
-                        id:tieude_solieu
+                    MDBoxLayout:
+                        orientation: 'vertical'
                         md_bg_color: app.theme_cls.primary_color
-                        elevation:2
-                        title:''
-                        # right_action_items: [["magnify", lambda x: app.search_tram(self.text)]]
-                        left_action_items: [['home', lambda x: app.callback_trangchu()]]
-                        MDTextField:
-                            icon_right: "magnify"
-                            id: hintexx
-                            hint_text: "Tìm kiếm"
-                            on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
-                            mode: "round"
-                        #     # pos_hint: {"center_x": .5, "center_y": .5}
+                        MDGridLayout:
+                            cols:2
+                            rows:1
+                            MDIconButton:
+                                icon: "arrow-left-thick"
+                                size_hint: None,None
+                                pos_hint: {"center_x": .5, "center_y": .5}
+                                on_press: app.callback_trangchu()
+                            MDTextField:
+                                icon_right: "magnify"
+                                id: hintexx
+                                hint_text: "Tìm kiếm"
+                                on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
+                                mode: "round"
+                                pos_hint: {"center_x": .5, "center_y": .5}
                     MDBoxLayout:
                         size_hint: None,None
                         size: (root.width * 0.96, root.height * 0.80)
@@ -256,20 +271,24 @@
                 icon: 'vector-difference'
                 MDBoxLayout:
                     orientation: 'vertical'
-                    MDTopAppBar:
-                        id:tieude_solieu
+                    MDBoxLayout:
+                        orientation: 'vertical'
                         md_bg_color: app.theme_cls.primary_color
-                        elevation:2
-                        title:''
-                        # right_action_items: [["magnify", lambda x: app.search_tram(self.text)]]
-                        left_action_items: [['arrow-left-thick', lambda x: app.callback_trangchu()]]
-                        MDTextField:
-                            icon_right: "magnify"
-                            id: hintexx
-                            hint_text: "Tìm kiếm"
-                            on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
-                            mode: "round"
-                        #     # pos_hint: {"center_x": .5, "center_y": .5}
+                        MDGridLayout:
+                            cols:2
+                            rows:1
+                            MDIconButton:
+                                icon: "arrow-left-thick"
+                                size_hint: None,None
+                                pos_hint: {"center_x": .5, "center_y": .5}
+                                on_press: app.callback_trangchu()
+                            MDTextField:
+                                icon_right: "magnify"
+                                id: hintexx
+                                hint_text: "Tìm kiếm"
+                                on_text: app.search_tram(self.text)  # Gọi hàm tìm kiếm khi văn bản thay đổi
+                                mode: "round"
+                                pos_hint: {"center_x": .5, "center_y": .5}
                     MDBoxLayout:
                         size_hint: None,None
                         size: (root.width * 0.96, root.height * 0.80)
@@ -278,7 +297,6 @@
                         MDScrollView:
                             MDList:
                                 id: tramkttv_ap_tinh      
-
     MDScreen:
         name:'tram'
         MDBoxLayout:
@@ -310,7 +328,7 @@
         MDBoxLayout:
             size_hint: 1, 1
             orientation: 'vertical'
-            padding: 10, 10, 0, 10
+            padding: 5, 5, 5, 5
             MDTopAppBar:
                 # id:tieude_tram_bieudo
                 md_bg_color: app.theme_cls.primary_color
@@ -319,7 +337,6 @@
                 # size_hint: 1, 0.2
                 right_action_items: [["chart-bar", lambda x: app.vebieudo_bar()]]
                 left_action_items: [['arrow-left-thick', lambda x: app.callback_solieu()]]
-
             MDScrollView:
                 id: view
                 do_scroll_x: True
