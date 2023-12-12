@@ -38,6 +38,8 @@ from kivymd.icon_definitions import md_icons
 from kivymd.uix.gridlayout import MDGridLayout
 from math import sin
 from kivy_garden.graph import Graph,BarPlot,LinePlot
+from kivy.uix.anchorlayout import AnchorLayout
+from kivymd.uix.datatables import MDDataTable
 # from kivy.uix.widget import Widget
 # from kivy.properties import ObjectProperty
 from kivy.properties import NumericProperty
@@ -249,10 +251,44 @@ class SOLIEU_KTTV(MDApp):
     def callback_trangchu(self):
         app = MDApp.get_running_app()
         app.root.current = 'trangchu'
-        
+    def callback_dienmua(self,**kwargs):
+        app = MDApp.get_running_app()
+        app.root.current = 'dienmua'
+        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.primary_palette = "Orange"
+        data_tables = MDDataTable(
+            size_hint=(0.99, 0.9),
+            use_pagination=True,
+            rows_num=10,
+            column_data=[
+                ("Trạm-Giờ", dp(20)),
+                ("1h", dp(20)),
+                ("3h", dp(20)),
+                ("6h", dp(20)),
+                ("12h", dp(20)),
+                ("24h", dp(20)),
+                ("48h", dp(20)),
+                ("72h", dp(20)),
+            ],
+
+        )
+        # ac_lout = layout.add_widget(data_tables)
+        tinh_click = self.root.ids.provin.title
+        # print(tinh_click)
+        tentinh = self.ten_tinh_txt(tinh_click)
+        ds_tram = np.genfromtxt('tinh/' + tentinh, delimiter=',', dtype=None, names=True, encoding=None)
+        for tram in ds_tram:
+            if 'mua' in tram[2]:
+                muatong = self.TTB_API_muatong(tram[0],tram[2])
+                data_tables.add_row((tram[1], muatong[0], muatong[1],muatong[2], muatong[3], muatong[4],muatong[5],muatong[6]))
+        self.root.ids.dienmua_layout.add_widget(data_tables)
+
     def callback_solieu(self):
         app = MDApp.get_running_app()
         app.root.current = 'solieu'
+        self.theme_cls.theme_style = "Light"
+        self.theme_cls.primary_palette = "LightBlue"
+
 
     def callback_for_menu_items(self, *args):
         toast(args[0])
@@ -426,31 +462,12 @@ class SOLIEU_KTTV(MDApp):
     #     toast(tram + ':' + thongtin)
 
         
-    def TTB_API_HC(self):
-        now = datetime.now()
-        kt = datetime(now.year,now.month,now.day,now.hour)
-        bd = kt - timedelta(days=1)
-        # data = pd.DataFrame()
-        # data['time'] = pd.date_range(bd,kt,freq='T')
-        matram = '5ST'
-        # muc nuoc
-        pth = 'http://113.160.225.84:2018/API_TTB/JSON/solieu.php?matram={}&ten_table={}&sophut=1&tinhtong=0&thoigianbd=%27{}%2000:00:00%27&thoigiankt=%27{}%2023:59:00%27'
-        pth = pth.format(matram,'ho_dakdrinh_mucnuoc',bd.strftime('%Y-%m-%d'),kt.strftime('%Y-%m-%d'))
-        response = requests.get(pth)
-        mucnuoc = np.array(response.json())
-        # mua
-        pth = 'http://113.160.225.84:2018/API_TTB/JSON/solieu.php?matram={}&ten_table={}&sophut=1&tinhtong=0&thoigianbd=%27{}%2000:00:00%27&thoigiankt=%27{}%2023:59:00%27'
-        pth = pth.format(matram,'ho_dakdrinh_qve',bd.strftime('%Y-%m-%d'),kt.strftime('%Y-%m-%d'))
-        response = requests.get(pth)
-        mua = np.array(response.json())
-        return mucnuoc,mua
-    
     def tinhmua(self,data,bd,kt):
         tonngmua = 0
         for a in range(data.shape[0]-1,1,-1):
             date_object = datetime.strptime(data[a]['Thoigian_SL'], "%Y-%m-%d %H:%M:%S")
             if date_object > bd and date_object <=kt:
-                tonngmua+= float(data[a]['Solieu'])
+                tonngmua+= float(data[a]['SoLieu'])
         return tonngmua
     
     
@@ -473,17 +490,17 @@ class SOLIEU_KTTV(MDApp):
         #     return '-','-'
         return mua
     
-    def TTB_API_SONGTRANH_muatong(self,matram):
+    def TTB_API_muatong(self,matram,tenbang):
         now = datetime.now()
         kt = datetime(now.year,now.month,now.day,now.hour)
-        bd = kt - timedelta(days=1)
+        bd = kt - timedelta(days=3)
         # mua
-        pth = 'http://113.160.225.84:2018/API_TTB/JSON/solieu.php?matram={}&ten_table={}&sophut=1&tinhtong=0&thoigianbd=%27{}%2000:00:00%27&thoigiankt=%27{}%2023:59:00%27'
-        pth = pth.format(matram,'mua_songtranh',bd.strftime('%Y-%m-%d'),kt.strftime('%Y-%m-%d'))
+        pth = 'http://113.160.225.84:2018/API_TTB/JSON/solieu.php?matram={}&ten_table={}&sophut=60&tinhtong=1&thoigianbd=%27{}%2000:00:00%27&thoigiankt=%27{}%2023:59:00%27'
+        pth = pth.format(matram,tenbang,bd.strftime('%Y-%m-%d'),kt.strftime('%Y-%m-%d'))
         response = requests.get(pth)
         mua = np.array(response.json())
         if len(mua) < 5:
-            return '-','-','-','-','-','-'
+            return '-','-','-','-','-','-','-'
         else:
             giohientai = datetime.strptime(mua[-1]['Thoigian_SL'], '%Y-%m-%d %H:%M:%S')
             mua1 = self.tinhmua(mua,giohientai-timedelta(hours=1),giohientai)
@@ -496,7 +513,11 @@ class SOLIEU_KTTV(MDApp):
             mua12 = '{:.2f}'.format(mua12)
             mua24 = self.tinhmua(mua,giohientai-timedelta(hours=24),giohientai)
             mua24 = '{:.2f}'.format(mua24)
-        return mua1,mua3,mua6,mua12,mua24, mua[-1]['Thoigian_SL']
+            mua48 = self.tinhmua(mua,giohientai-timedelta(hours=48),giohientai)
+            mua48 = '{:.2f}'.format(mua48)
+            mua72 = self.tinhmua(mua,giohientai-timedelta(hours=72),giohientai)
+            mua72 = '{:.2f}'.format(mua72)
+        return mua1,mua3,mua6,mua12,mua24,mua48,mua72
     
     
     def read_ftp_sever_image(self,tenanh):
