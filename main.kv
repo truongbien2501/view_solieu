@@ -1,4 +1,5 @@
 #:import utils kivy.utils
+
 <Homescreen>:
     name: 'taotrang'
     MDScreen:
@@ -96,50 +97,59 @@
                         text:"Sign Up"
                         theme_text_color:'Custom'
                         text_color:app.theme_cls.primary_color
-                        # on_release:
-                        #     app.root.transition.direction ="left"
-                        #     app.root.login(username.text, password.text)
-
     
     MDScreen:
         name:'trangchu'
+        id: mainWindow
         MDBoxLayout:
             orientation: 'vertical'
             md_bg_color: 1, 1, 1, 1
-            MDTopAppBar:
-                id:tieudettb
-                md_bg_color: app.theme_cls.primary_color
-                elevation:1
-                title:'ĐÀI KTTV TTB'
-                # right_action_items: [["dots-vertical", lambda x: app.callback_trangchu()], ["clock", lambda x: app.callback_trangchu()]]
-                left_action_items: [['home', lambda x: app.callback_trangchu()]]
             MDBoxLayout:
+                orientation: 'vertical'
+                size_hint:(1,0.1)
+                MDGridLayout:
+                    cols:2
+                    rows:1
+                    Image:
+                        source:'icon/logo_ttb.png'
+                        # size_hint:(0.09,0.1)
+                        size_hint:None,None
+                        size:(80,100)
+                        padding:0
+                    MDLabel:
+                        id:tieudettb
+                        md_bg_color: app.theme_cls.primary_color
+                        padding:20
+                        text:'ĐÀI KTTV TTB'
+                        font_style:'H6'
+            MDBoxLayout:
+                size_hint:(1,0.6)
                 padding:10
                 orientation: 'vertical'
-                
                 MDScrollView:
                     MDList:
                         id: provin
-                        # md_bg_color:0, 0, 0, 0.8
-            MDBottomAppBar:
-                md_bg_color: app.theme_cls.primary_color
-                MDTopAppBar:
-                    md_bg_color: app.theme_cls.primary_color
-                    elevation:1
-                    title:'Khu vực Trung Trung Bộ'
-                    
+
+        # MDSpinner:
+        #     id:spiner
+        #     size_hint: None, None
+        #     size: dp(46), dp(46)
+        #     pos_hint: {'center_x': .5, 'center_y': .5}
+        #     active: False     
+
     MDScreen:
         name:'solieu'
-                            # md_bg_color:0, 0, 0, 0.8    
         MDBottomNavigation:
+            id:manhinhsolieu
             MDBottomNavigationItem:
+                id: solieumua
                 name: 'mua'
                 text: 'Mưa'
                 icon: 'weather-lightning-rainy'
-                # badge_icon: "numeric-10"
                 MDBoxLayout:
                     orientation: 'vertical'
                     MDBoxLayout:
+                        size_hint: 1,0.1
                         orientation: 'vertical'
                         md_bg_color: app.theme_cls.primary_color
                         MDGridLayout:
@@ -162,17 +172,27 @@
                                 size_hint: None,None
                                 pos_hint: {"center_x": .5, "center_y": .5}
                                 on_press: app.callback_dienmua()
+                    # MDBoxLayout:
+                    #     size_hint: 1,0.1
+                    #     orientation: 'vertical'
+                    #     MDList:
+                    #         size_hint: (1, .9)
+                    #         cols:4
+                    #         text_color: 1,0, 0, 1
+                    #         id: tramkttv_mua_title   
                     MDBoxLayout:
-                        size_hint: None,None
-                        size: (root.width * 0.96, root.height * 0.80)
-                        padding:10
+                        size_hint: 1,0.9
                         orientation: 'vertical'
                         MDScrollView:
+                            do_scroll_x: True
+                            do_scroll_y: True
                             MDList:
+                                size_hint: (1, 2.9)
+                                cols:4
+                                text_color: 1,0, 0, 1
                                 id: tramkttv_mua_tinh
 
             MDBottomNavigationItem:
-                id: hhhhhh
                 name: 'mucnuoc'
                 text: 'Mực nước'
                 icon: 'waves-arrow-up'
@@ -181,6 +201,7 @@
                     orientation: 'vertical'
                     MDBoxLayout:
                         orientation: 'vertical'
+                        size_hint: 1,0.1
                         md_bg_color: app.theme_cls.primary_color
                         MDGridLayout:
                             cols:2
@@ -198,12 +219,15 @@
                                 mode: "round"
                                 pos_hint: {"center_x": .5, "center_y": .5}
                     MDBoxLayout:
-                        size_hint: None,None
-                        size: (root.width * 0.96, root.height * 0.80)
-                        padding:10
+                        size_hint: 1,0.9
                         orientation: 'vertical'
                         MDScrollView:
+                            do_scroll_x: True
+                            do_scroll_y: True
                             MDList:
+                                size_hint: (1, 2)
+                                cols:4
+                                text_color: 1,0, 0, 1
                                 id: tramkttv_mucnuoc_tinh
             MDBottomNavigationItem:
                 name: 'gio'
@@ -212,6 +236,7 @@
                 MDBoxLayout:
                     orientation: 'vertical'
                     MDBoxLayout:
+                        size_hint: 1,0.1
                         orientation: 'vertical'
                         md_bg_color: app.theme_cls.primary_color
                         MDGridLayout:
@@ -230,12 +255,15 @@
                                 mode: "round"
                                 pos_hint: {"center_x": .5, "center_y": .5}
                     MDBoxLayout:
-                        size_hint: None,None
-                        size: (root.width * 0.96, root.height * 0.80)
-                        padding:10
+                        size_hint: 1,0.9
                         orientation: 'vertical'
                         MDScrollView:
+                            do_scroll_x: True
+                            do_scroll_y: True
                             MDList:
+                                size_hint: (1, 2)
+                                # cols:4
+                                text_color: 1,0, 0, 1
                                 id: tramkttv_gio_tinh
             MDBottomNavigationItem:
                 name: 'nhiet'
@@ -245,6 +273,7 @@
                     orientation: 'vertical'
                     MDBoxLayout:
                         orientation: 'vertical'
+                        size_hint: 1,0.1
                         md_bg_color: app.theme_cls.primary_color
                         MDGridLayout:
                             cols:2
@@ -262,12 +291,15 @@
                                 mode: "round"
                                 pos_hint: {"center_x": .5, "center_y": .5}
                     MDBoxLayout:
-                        size_hint: None,None
-                        size: (root.width * 0.96, root.height * 0.80)
-                        padding:10
+                        size_hint: 1,0.9
                         orientation: 'vertical'
                         MDScrollView:
+                            do_scroll_x: True
+                            do_scroll_y: True
                             MDList:
+                                size_hint: (1, 2)
+                                cols:4
+                                text_color: 1,0, 0, 1
                                 id: tramkttv_nhiet_tinh      
             MDBottomNavigationItem:
                 name: 'ap'
@@ -302,24 +334,44 @@
                         MDScrollView:
                             MDList:
                                 id: tramkttv_ap_tinh      
+
     MDScreen:
         name:'tram'
         MDBoxLayout:
             orientation: 'vertical'
             md_bg_color: 1, 1, 1, 1
-            MDTopAppBar:
-                id:tieude_tram
-                md_bg_color: app.theme_cls.primary_color
-                elevation:2
-                title:''
-                right_action_items: [["chart-scatter-plot", lambda x: app.vebieudo()]]
-                left_action_items: [['arrow-left-thick', lambda x: app.callback_solieu()]]
-
+            id:scr_solieutramchitiet
             MDBoxLayout:
-                padding:10
+                orientation: 'vertical'
+                md_bg_color: app.theme_cls.primary_color
+                size_hint:(1,0.1)
+                MDGridLayout:
+                    cols:3
+                    rows:1
+                    MDIconButton:
+                        icon: "arrow-left-thick"
+                        # size_hint: None,None
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                        on_press: app.callback_solieu()
+                    MDLabel:
+                        id: tieude_tram_click
+                        text:''
+                        font_style:'H6'
+                        halign:"center"
+                    MDIconButton:
+                        icon: "chart-scatter-plot"
+                        # size_hint: None,None
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                        on_press: app.vebieudo()            
+
+            
+            MDBoxLayout:
+                # id:scr_solieutramchitiet
+                size_hint:(1,0.9)
                 orientation: 'vertical'
                 MDScrollView:
                     MDList:
+                        # cols:4
                         id: solieutram
 
     MDScreen:
@@ -331,23 +383,34 @@
                 pos: self.pos
                 size: self.size
         MDBoxLayout:
-            size_hint: 1, 1
+            # size_hint: 1, 1
             orientation: 'vertical'
-            padding: 5, 5, 5, 5
-            MDTopAppBar:
-                # id:tieude_tram_bieudo
+            MDGridLayout:
+                size_hint: 1, 0.1
                 md_bg_color: app.theme_cls.primary_color
-                elevation:0.8
-                title:''
-                # size_hint: 1, 0.2
-                right_action_items: [["chart-bar", lambda x: app.vebieudo_bar()]]
-                left_action_items: [['arrow-left-thick', lambda x: app.callback_solieu()]]
+                cols:3
+                rows:1
+                MDIconButton:
+                    icon: "arrow-left-thick"
+                    # size_hint: None,None
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    on_press: app.callback_solieu_chitiet()
+                MDLabel:
+                    id: tieude_tram_bieudo
+                    text:''
+                    font_style:'H6'
+                    halign:"center"
+                MDIconButton:
+                    icon: "chart-bar"
+                    # size_hint: None,None
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    on_press: app.vebieudo_bar()            
             MDScrollView:
                 id: view
                 do_scroll_x: True
                 do_scroll_y: False
                 orientation: 'vertical'
-                size_hint: 1, 0.5
+                size_hint: 1, 0.8
                 valign: 'middle'
                 bar_width: 4
                 bar_color: 1, 1, 1, 1
@@ -362,60 +425,52 @@
                         size_hint_x: 1
                         size_hint_y: 1
 
-            # BoxLayout:
-            #     id: zoom
-            #     orientation: 'horizontal'
-            #     size_hint: 1, 0.1
-            #     padding: 10
-
-            #     Button:
-            #         text: '-'
-            #         size_hint_x: None
-            #         width: self.height
-            #         on_release: app.update_zoom(self.text)
-
-            #     Label:
-            #         text: str(int(app.zoom)) + ' ngày'
-            #         # text:  '25x'
-            #     Button:
-            #         text: '+'
-            #         size_hint_x: None
-            #         width: self.height
-            #         on_release: app.update_zoom(self.text)
-
-            BoxLayout:
-                size_hint: 1, 0.1
-                orientation: 'vertical'
-
-                Label:
-                    text: 'Thời gian: ' + str(freq.value) + ' ngày'
-
-                Slider:
-                    id: freq
-                    min: 1
-                    max: 3
-                    step: 1
-                    # on_value: app.update_plot(freq.value)
-
-            BoxLayout:
-                size_hint: 1, 0.3
 
     MDScreen:
         name: 'dienmua'
         id: dienmua
-        md_bg_color: app.theme_cls.primary_color
+        # md_bg_color: app.theme_cls.primary_color
         MDBoxLayout:
-            id: dienmua_layout
-            padding:10
+            # size_hint: (1, 0.1)
+            md_bg_color:app.theme_cls.primary_color        
             orientation: 'vertical'
-            MDTopAppBar:
-                id:tieude_tram
-                md_bg_color: app.theme_cls.primary_color
-                elevation:2
-                title:'Tổng kết mưa'
-                left_action_items: [['arrow-left-thick', lambda x: app.callback_solieu()]]
             
-
+            MDGridLayout:
+                size_hint: (1, 0.1)
+                cols:2
+                rows:1
+                MDIconButton:
+                    icon: "arrow-left-thick"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    on_press: app.callback_solieu()
+                MDLabel:
+                    text:'Tổng kết số liệu'
+            MDBoxLayout:
+                # id:muatongket
+                size_hint: (1, 0.9)
+                orientation: 'vertical'
+                md_bg_color:1, 1, 1, 1
+                MDScrollView:
+                    # size_hint: None, 0.8
+                    do_scroll_x: True
+                    do_scroll_y: True
+                    bar_color: 0, 0, 100, 1
+                    bar_width: 2
+                    MDList:
+                        size_hint: (1.8, 6)
+                        cols:8
+                        text_color: 1,0, 0, 1
+                        width: self.minimum_width
+                        height: self.minimum_height
+                        id: dienmua_layout 
+# <LoadingWidget>:
+#     id:manhinhcho
+#     name:'manhinhcho'
+#     MDSpinner:
+#         size_hint: None, None
+#         size: dp(48), dp(48)
+#         pos_hint: {'center_x': .5, 'center_y': .5}
+#         active: True
 
 
 <RectangularRippleButton>:
