@@ -108,19 +108,19 @@
                 orientation: 'vertical'
                 size_hint:(1,0.1)
                 MDGridLayout:
-                    cols:2
+                    cols:1
                     rows:1
-                    Image:
-                        source:'icon/logo_ttb.png'
-                        # size_hint:(0.09,0.1)
-                        size_hint:None,None
-                        size:(80,100)
-                        padding:0
+                    # Image:
+                    #     source:'icon/logo_ttb.png'
+                    #     # size_hint:(0.09,0.1)
+                    #     size_hint:None,None
+                    #     size:(80,100)
+                    #     padding:0
                     MDLabel:
                         id:tieudettb
                         md_bg_color: app.theme_cls.primary_color
                         padding:20
-                        text:'ĐÀI KTTV TTB'
+                        text:'ĐÀI KTTV TRUNG TRUNG BỘ'
                         font_style:'H6'
             MDBoxLayout:
                 size_hint:(1,0.6)
@@ -309,6 +309,7 @@
                 MDBoxLayout:
                     orientation: 'vertical'
                     MDBoxLayout:
+                        size_hint: 1,0.1
                         orientation: 'vertical'
                         md_bg_color: app.theme_cls.primary_color
                         MDGridLayout:
@@ -327,12 +328,14 @@
                                 mode: "round"
                                 pos_hint: {"center_x": .5, "center_y": .5}
                     MDBoxLayout:
-                        size_hint: None,None
-                        size: (root.width * 0.96, root.height * 0.80)
-                        padding:10
+                        size_hint: 1,0.9
                         orientation: 'vertical'
                         MDScrollView:
+                            do_scroll_x: True
+                            do_scroll_y: True
                             MDList:
+                                size_hint: (1, 2)
+                                text_color: 1,0, 0, 1
                                 id: tramkttv_ap_tinh      
 
     MDScreen:
