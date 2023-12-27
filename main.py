@@ -231,7 +231,7 @@ class SOLIEU_KTTV(MDApp):
         self.root.ids.tramkttv_ap_tinh.clear_widgets()
 
         # self.root.ids.hintexx.helper_text = self.root.ids.tieude_solieu.title
-        tentinh = self.ten_tinh_txt(self.root.ids.tieude_solieu.title)
+        tentinh = self.ten_tinh_txt(self.root.ids.provin.title)
         ds_tram = np.genfromtxt('tinh/' + tentinh, delimiter=',', dtype=None, names=True, encoding=None)
         for tram in ds_tram:
             if str(tram[1]) == str(search_text):
