@@ -316,7 +316,7 @@ class SOLIEU_KTTV(MDApp):
                         break
                 for value in range(len(solieu) - 1, -1, -1):
                     icon_item = OneLineIconListItem(
-                        text=solieu[value]['Thoigian_SL'] + ' : ' + solieu[value][tencot_sl]
+                        text=solieu[value]['Thoigian_SL'][:-3] + ' : ' + solieu[value][tencot_sl]
                     )
                     # gán su kien cho icon
                     self.root.ids.solieutram.add_widget(icon_item)
@@ -440,7 +440,7 @@ class SOLIEU_KTTV(MDApp):
         for child in self.root.ids.solieutram.children:
             # print(child.text)
             dl = str(child.text).split(':')
-            gt.append(float(dl[3].strip()))
+            gt.append(float(dl[2].strip()))
             tg.append(datetime.strptime(dl[0].strip() + ':' + dl[1].strip(),"%Y-%m-%d %H:%M"))
         tentram = self.root.ids.tieude_tram_click.text   # lay ten yeo to ve
         self.root.ids.tieude_tram_bieudo.text = tentram
@@ -508,7 +508,7 @@ class SOLIEU_KTTV(MDApp):
             for child in self.root.ids.solieutram.children:
                 # print(child.text)
                 dl = str(child.text).split(':')
-                gt.append(float(dl[3].strip()))
+                gt.append(float(dl[2].strip()))
                 tg.append(datetime.strptime(dl[0].strip() + ':' + dl[1].strip(),"%Y-%m-%d %H:%M"))
             # print(tentram)
             # print(gt)
