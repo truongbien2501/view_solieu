@@ -26,7 +26,7 @@ from kivy.clock import Clock
 
 
 # from functools import partial
-# Window.size = (450, 600)
+Window.size = (450, 600)
 
 class LoadingWidget(Screen):
     pass
@@ -123,18 +123,18 @@ class SOLIEU_KTTV(MDApp):
         Clock.schedule_once(lambda dt: self.creat_point_provin(instance.text,spner), 2) 
     
     def creat_point_provin(self,tinh_click,spner): 
-        self.root.ids.tramkttv_mua_tinh.add_widget(OneLineListItem(text='Trạm',font_style='Body1',bg_color='#00bfff'))
-        self.root.ids.tramkttv_mua_tinh.add_widget(OneLineListItem(text='Xu thế',font_style='Body1',bg_color='#00bfff'))
-        self.root.ids.tramkttv_mua_tinh.add_widget(OneLineListItem(text='Giờ',font_style='Body1',bg_color='#00bfff'))
-        self.root.ids.tramkttv_mua_tinh.add_widget(OneLineListItem(text='1h(mm)',font_style='Body1',bg_color='#00bfff'))
-        self.root.ids.tramkttv_mucnuoc_tinh.add_widget(OneLineListItem(text='Trạm',font_style='Body1',bg_color='#00bfff'))
-        self.root.ids.tramkttv_mucnuoc_tinh.add_widget(OneLineListItem(text='Xu thế',font_style='Body1',bg_color='#00bfff'))
-        self.root.ids.tramkttv_mucnuoc_tinh.add_widget(OneLineListItem(text='Giờ',font_style='Body1',bg_color='#00bfff'))
-        self.root.ids.tramkttv_mucnuoc_tinh.add_widget(OneLineListItem(text='H(m)',font_style='Body1',bg_color='#00bfff'))
-        self.root.ids.tramkttv_nhiet_tinh.add_widget(OneLineListItem(text='Trạm',font_style='Body1',bg_color='#00bfff'))
-        self.root.ids.tramkttv_nhiet_tinh.add_widget(OneLineListItem(text='Xu thế',font_style='Body1',bg_color='#00bfff'))
-        self.root.ids.tramkttv_nhiet_tinh.add_widget(OneLineListItem(text='Giờ',font_style='Body1',bg_color='#00bfff'))
-        self.root.ids.tramkttv_nhiet_tinh.add_widget(OneLineListItem(text='Độ C',font_style='Body1',bg_color='#00bfff'))    
+        self.root.ids.tramkttv_mua_tinh.add_widget(OneLineListItem(text='Trạm',font_style='Caption',bg_color='#00bfff'))
+        self.root.ids.tramkttv_mua_tinh.add_widget(OneLineListItem(text='Xu thế',font_style='Caption',bg_color='#00bfff'))
+        self.root.ids.tramkttv_mua_tinh.add_widget(OneLineListItem(text='Giờ',font_style='Caption',bg_color='#00bfff'))
+        self.root.ids.tramkttv_mua_tinh.add_widget(OneLineListItem(text='1h(mm)',font_style='Caption',bg_color='#00bfff'))
+        self.root.ids.tramkttv_mucnuoc_tinh.add_widget(OneLineListItem(text='Trạm',font_style='Caption',bg_color='#00bfff'))
+        self.root.ids.tramkttv_mucnuoc_tinh.add_widget(OneLineListItem(text='Xu thế',font_style='Caption',bg_color='#00bfff'))
+        self.root.ids.tramkttv_mucnuoc_tinh.add_widget(OneLineListItem(text='Giờ',font_style='Caption',bg_color='#00bfff'))
+        self.root.ids.tramkttv_mucnuoc_tinh.add_widget(OneLineListItem(text='H(m)',font_style='Caption',bg_color='#00bfff'))
+        self.root.ids.tramkttv_nhiet_tinh.add_widget(OneLineListItem(text='Trạm',font_style='Caption',bg_color='#00bfff'))
+        self.root.ids.tramkttv_nhiet_tinh.add_widget(OneLineListItem(text='Xu thế',font_style='Caption',bg_color='#00bfff'))
+        self.root.ids.tramkttv_nhiet_tinh.add_widget(OneLineListItem(text='Giờ',font_style='Caption',bg_color='#00bfff'))
+        self.root.ids.tramkttv_nhiet_tinh.add_widget(OneLineListItem(text='Độ C',font_style='Caption',bg_color='#00bfff'))    
         
 
         self.root.ids.provin.title = tinh_click
@@ -152,16 +152,16 @@ class SOLIEU_KTTV(MDApp):
                     if muatong[0] !='-':
                         if float(muatong[0]) == 0:
                             maune_value = '#32cd32'
-                            self.root.ids.tramkttv_mua_tinh.add_widget(MDIconButton(icon="circle",theme_icon_color="Custom",icon_color= maune_value))
+                            self.root.ids.tramkttv_mua_tinh.add_widget(MDIconButton(icon="circle",theme_icon_color="Custom",icon_color= maune_value,size_hint_x = None,width = 2))
                         elif float(muatong[0]) > 0 and float(muatong[0]) <10:
                             maune_value = '#32cd32'
-                            self.root.ids.tramkttv_mua_tinh.add_widget(MDIconButton(icon="circle",theme_icon_color="Custom",icon_color= maune_value))
+                            self.root.ids.tramkttv_mua_tinh.add_widget(MDIconButton(icon="circle",theme_icon_color="Custom",icon_color= maune_value,size_hint_x = None,width = 2))
                         elif float(muatong[0]) >= 10 and float(muatong[0]) <30:
                             maune_value = '#ffff00' 
-                            self.root.ids.tramkttv_mua_tinh.add_widget(MDIconButton(icon="circle",theme_icon_color="Custom",icon_color= maune_value))
+                            self.root.ids.tramkttv_mua_tinh.add_widget(MDIconButton(icon="circle",theme_icon_color="Custom",icon_color= maune_value,size_hint_x = None,width = 2))
                         elif float(muatong[0]) >= 30:
                             maune_value = '#ff0000' 
-                            self.root.ids.tramkttv_mua_tinh.add_widget(MDIconButton(icon="circle",theme_icon_color="Custom",icon_color= maune_value))
+                            self.root.ids.tramkttv_mua_tinh.add_widget(MDIconButton(icon="circle",theme_icon_color="Custom",icon_color= maune_value,size_hint_x = None,width = 2))
                     else:
                         self.root.ids.tramkttv_mua_tinh.add_widget(OneLineRightIconListItem(text='-'))
                     # gio
@@ -362,8 +362,6 @@ class SOLIEU_KTTV(MDApp):
         # tinh_click = self.root.ids.provin.title
         # load sau 2s
         Clock.schedule_once(lambda dt: self.tinh_mua_tong_ket(spner), 2) 
-        
-        
         
         # print(tinh_click)
     def tinh_mua_tong_ket(self,spner):
